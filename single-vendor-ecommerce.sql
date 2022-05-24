@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2022 at 04:56 PM
+-- Generation Time: May 24, 2022 at 07:06 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -29,14 +29,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `attributes` (
   `attributes_id` bigint(20) UNSIGNED NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_by` bigint(20) UNSIGNED NOT NULL,
+  `updated_by` bigint(20) UNSIGNED DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `attributes`
+--
+
+INSERT INTO `attributes` (`attributes_id`, `status`, `created_by`, `updated_by`, `title`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(4, 1, 2, NULL, 'color', NULL, NULL, NULL),
+(5, 1, 1, NULL, 'size', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -46,9 +54,9 @@ CREATE TABLE `attributes` (
 
 CREATE TABLE `brands` (
   `brands_id` bigint(20) UNSIGNED NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_by` bigint(20) UNSIGNED NOT NULL,
+  `updated_by` bigint(20) UNSIGNED DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rank` int(11) NOT NULL,
@@ -60,6 +68,18 @@ CREATE TABLE `brands` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`brands_id`, `status`, `created_by`, `updated_by`, `title`, `slug`, `rank`, `image`, `meta_title`, `meta_keyword`, `meta_description`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 1, NULL, 'Apple', 'apple', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 1, 1, NULL, 'Samsung', 'samsung', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 1, 1, NULL, 'Oneplus', 'oneplus', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 1, 1, NULL, 'Google', 'google', 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 1, 1, NULL, 'Nike', 'nike', 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 1, 1, NULL, 'Adidas', 'adidas', 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -69,9 +89,9 @@ CREATE TABLE `brands` (
 
 CREATE TABLE `categories` (
   `category_id` bigint(20) UNSIGNED NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_by` bigint(20) UNSIGNED NOT NULL,
+  `updated_by` bigint(20) UNSIGNED DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rank` int(11) NOT NULL,
@@ -83,6 +103,15 @@ CREATE TABLE `categories` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `status`, `created_by`, `updated_by`, `title`, `slug`, `rank`, `image`, `meta_title`, `meta_keyword`, `meta_description`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 1, NULL, 'men', 'men', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 1, 1, NULL, 'women', 'women', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 1, 1, NULL, 'child', 'child', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -140,20 +169,20 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(5, '2022_05_23_124450_create_categories_table', 2),
-(8, '2022_05_23_124527_create_subcategories_table', 3),
-(9, '2022_05_23_125446_create_brands_table', 4),
-(10, '2022_05_23_125609_create_tags_table', 5),
-(12, '2022_05_23_125651_create_products_table', 6),
-(13, '2022_05_23_131146_create_product_tag_table', 7),
-(14, '2022_05_23_131505_create_product_images_table', 8),
-(15, '2022_05_23_131924_create_attributes_table', 9),
-(16, '2022_05_23_132214_create_product_attributes_table', 10),
-(17, '2022_05_23_132903_create_customers_table', 11);
+(32, '2014_10_12_000000_create_users_table', 1),
+(33, '2014_10_12_100000_create_password_resets_table', 1),
+(34, '2019_08_19_000000_create_failed_jobs_table', 1),
+(35, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(36, '2022_05_23_124450_create_categories_table', 1),
+(37, '2022_05_23_124527_create_subcategories_table', 1),
+(38, '2022_05_23_125446_create_brands_table', 1),
+(39, '2022_05_23_125609_create_tags_table', 1),
+(40, '2022_05_23_125651_create_products_table', 1),
+(41, '2022_05_23_131146_create_product_tag_table', 1),
+(42, '2022_05_23_131505_create_product_images_table', 1),
+(43, '2022_05_23_131924_create_attributes_table', 1),
+(44, '2022_05_23_132214_create_product_attributes_table', 1),
+(45, '2022_05_23_132903_create_customers_table', 1);
 
 -- --------------------------------------------------------
 
@@ -194,9 +223,9 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `products` (
   `products_id` bigint(20) UNSIGNED NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_by` bigint(20) UNSIGNED NOT NULL,
+  `updated_by` bigint(20) UNSIGNED DEFAULT NULL,
   `category_id` bigint(20) UNSIGNED NOT NULL,
   `sub_category_id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -257,8 +286,8 @@ CREATE TABLE `product_images` (
 
 CREATE TABLE `product_tag` (
   `product_tag_id` bigint(20) UNSIGNED NOT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` bigint(20) UNSIGNED NOT NULL,
+  `updated_by` bigint(20) UNSIGNED DEFAULT NULL,
   `tags_id` bigint(20) UNSIGNED NOT NULL,
   `products_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -275,9 +304,9 @@ CREATE TABLE `product_tag` (
 CREATE TABLE `subcategories` (
   `sub_category_id` bigint(20) UNSIGNED NOT NULL,
   `category_id` bigint(20) UNSIGNED NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_by` bigint(20) UNSIGNED NOT NULL,
+  `updated_by` bigint(20) UNSIGNED DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rank` int(11) NOT NULL,
@@ -298,15 +327,26 @@ CREATE TABLE `subcategories` (
 
 CREATE TABLE `tags` (
   `tags_id` bigint(20) UNSIGNED NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_by` bigint(20) UNSIGNED NOT NULL,
+  `updated_by` bigint(20) UNSIGNED DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tags`
+--
+
+INSERT INTO `tags` (`tags_id`, `status`, `created_by`, `updated_by`, `title`, `slug`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 2, NULL, 'trend', 'trend', NULL, NULL, NULL),
+(2, 1, 2, NULL, 'hot', 'hot', NULL, NULL, NULL),
+(3, 1, 2, NULL, 'new', 'new', NULL, NULL, NULL),
+(4, 1, 2, NULL, 'man', 'man', NULL, NULL, NULL),
+(5, 1, 2, NULL, 'women', 'women', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -327,6 +367,14 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'BLosPCxngp', 't2lSdq5Hfs@gmail.com', NULL, '$2y$10$tegR1MwU.ZvgG57SwEx3PeP1FFdcSWv/HxtARVUijnn3RwwkBmq36', NULL, NULL, NULL, NULL),
+(2, 'Bhuwan', 'bhuwan@gmail.com', NULL, '$2y$10$jxqi80zzBlX6PpH4wteU.OhcQjGLp5AblDGtO7zzXmFyU4/oDCtnC', NULL, NULL, NULL, NULL);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -334,21 +382,27 @@ CREATE TABLE `users` (
 -- Indexes for table `attributes`
 --
 ALTER TABLE `attributes`
-  ADD PRIMARY KEY (`attributes_id`);
+  ADD PRIMARY KEY (`attributes_id`),
+  ADD KEY `attributes_created_by_foreign` (`created_by`),
+  ADD KEY `attributes_updated_by_foreign` (`updated_by`);
 
 --
 -- Indexes for table `brands`
 --
 ALTER TABLE `brands`
   ADD PRIMARY KEY (`brands_id`),
-  ADD UNIQUE KEY `brands_slug_unique` (`slug`);
+  ADD UNIQUE KEY `brands_slug_unique` (`slug`),
+  ADD KEY `brands_created_by_foreign` (`created_by`),
+  ADD KEY `brands_updated_by_foreign` (`updated_by`);
 
 --
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`category_id`),
-  ADD UNIQUE KEY `categories_slug_unique` (`slug`);
+  ADD UNIQUE KEY `categories_slug_unique` (`slug`),
+  ADD KEY `categories_created_by_foreign` (`created_by`),
+  ADD KEY `categories_updated_by_foreign` (`updated_by`);
 
 --
 -- Indexes for table `customers`
@@ -390,6 +444,8 @@ ALTER TABLE `personal_access_tokens`
 ALTER TABLE `products`
   ADD PRIMARY KEY (`products_id`),
   ADD UNIQUE KEY `products_slug_unique` (`slug`),
+  ADD KEY `products_created_by_foreign` (`created_by`),
+  ADD KEY `products_updated_by_foreign` (`updated_by`),
   ADD KEY `products_category_id_foreign` (`category_id`),
   ADD KEY `products_sub_category_id_foreign` (`sub_category_id`);
 
@@ -413,6 +469,8 @@ ALTER TABLE `product_images`
 --
 ALTER TABLE `product_tag`
   ADD PRIMARY KEY (`product_tag_id`),
+  ADD KEY `product_tag_created_by_foreign` (`created_by`),
+  ADD KEY `product_tag_updated_by_foreign` (`updated_by`),
   ADD KEY `product_tag_tags_id_foreign` (`tags_id`),
   ADD KEY `product_tag_products_id_foreign` (`products_id`);
 
@@ -422,14 +480,18 @@ ALTER TABLE `product_tag`
 ALTER TABLE `subcategories`
   ADD PRIMARY KEY (`sub_category_id`),
   ADD UNIQUE KEY `subcategories_slug_unique` (`slug`),
-  ADD KEY `subcategories_category_id_foreign` (`category_id`);
+  ADD KEY `subcategories_category_id_foreign` (`category_id`),
+  ADD KEY `subcategories_created_by_foreign` (`created_by`),
+  ADD KEY `subcategories_updated_by_foreign` (`updated_by`);
 
 --
 -- Indexes for table `tags`
 --
 ALTER TABLE `tags`
   ADD PRIMARY KEY (`tags_id`),
-  ADD UNIQUE KEY `tags_slug_unique` (`slug`);
+  ADD UNIQUE KEY `tags_slug_unique` (`slug`),
+  ADD KEY `tags_created_by_foreign` (`created_by`),
+  ADD KEY `tags_updated_by_foreign` (`updated_by`);
 
 --
 -- Indexes for table `users`
@@ -446,19 +508,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attributes`
 --
 ALTER TABLE `attributes`
-  MODIFY `attributes_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `attributes_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `brands_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `brands_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -476,7 +538,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -518,24 +580,47 @@ ALTER TABLE `subcategories`
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `tags_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `tags_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `attributes`
+--
+ALTER TABLE `attributes`
+  ADD CONSTRAINT `attributes_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `attributes_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `brands`
+--
+ALTER TABLE `brands`
+  ADD CONSTRAINT `brands_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `brands_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `categories`
+--
+ALTER TABLE `categories`
+  ADD CONSTRAINT `categories_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `categories_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
+
+--
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `products_sub_category_id_foreign` FOREIGN KEY (`sub_category_id`) REFERENCES `subcategories` (`sub_category_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `products_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `products_sub_category_id_foreign` FOREIGN KEY (`sub_category_id`) REFERENCES `subcategories` (`sub_category_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `products_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `product_attributes`
@@ -554,14 +639,25 @@ ALTER TABLE `product_images`
 -- Constraints for table `product_tag`
 --
 ALTER TABLE `product_tag`
+  ADD CONSTRAINT `product_tag_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `product_tag_products_id_foreign` FOREIGN KEY (`products_id`) REFERENCES `products` (`products_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_tag_tags_id_foreign` FOREIGN KEY (`tags_id`) REFERENCES `tags` (`tags_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `product_tag_tags_id_foreign` FOREIGN KEY (`tags_id`) REFERENCES `tags` (`tags_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_tag_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `subcategories`
 --
 ALTER TABLE `subcategories`
-  ADD CONSTRAINT `subcategories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `subcategories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `subcategories_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `subcategories_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `tags`
+--
+ALTER TABLE `tags`
+  ADD CONSTRAINT `tags_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `tags_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

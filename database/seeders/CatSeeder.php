@@ -5,8 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use mysql_xdevapi\Table;
 
-class BrandSeeder extends Seeder
+class CatSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,12 +16,12 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-        $brands = ['Apple','Samsung','Oneplus','Google','Nike','Adidas'];
-        for($i=0;$i < count($brands);$i++){
-            DB::table('brands')->insert([
+        $category = ['men','women','child'];
+        for($i=0;$i<count($category);$i++){
+            DB::table('categories')->insert([
                 'created_by'=>1,
-                'title'=>$brands[$i],
-                'slug' => strtolower($brands[$i]),
+                'title' => $category[$i],
+                'slug' => strtolower($category[$i]),
                 'rank' => $i+1
             ]);
         }

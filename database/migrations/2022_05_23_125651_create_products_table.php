@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id('products_id');
-            $table->string('status');
-            $table->string('created_by');
-            $table->string('updated_by')->nullable();
+            $table->integer('status')->default(1);
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');
             $table->unsignedBigInteger('category_id')->unsigned();
             $table->foreign('category_id')->references('category_id')->on('categories')->onDelete('cascade');
             $table->unsignedBigInteger('sub_category_id')->unsigned();

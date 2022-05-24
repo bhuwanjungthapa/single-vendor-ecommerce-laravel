@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id('tags_id');
-            $table->string('status');
-            $table->string('created_by');
-            $table->string('updated_by')->nullable();
+            $table->integer('status')->default(1);
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');
             $table->string('title');
             $table->string('slug')->unique();
             $table->timestamps();

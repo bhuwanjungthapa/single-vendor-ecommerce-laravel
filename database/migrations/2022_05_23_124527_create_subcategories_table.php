@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('subcategories', function (Blueprint $table) {
             $table->id('sub_category_id');
             $table->unsignedBigInteger('category_id')->unsigned();
-            $table->string('status');
-            $table->string('created_by');
-            $table->string('updated_by')->nullable();
             $table->foreign('category_id')->references('category_id')->on('categories')->onDelete('cascade');
+            $table->integer('status')->default(1);
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');
             $table->string('title');
             $table->string('slug')->unique();
             $table->integer('rank');
