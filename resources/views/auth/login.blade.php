@@ -18,6 +18,8 @@
 <div class="login-box">
     <div class="login-logo">
         <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href=""><b>Single Vendor Ecommerce</b>LTE</a>
+
     </div>
     <!-- /.login-logo -->
     <div class="card">
