@@ -20,3 +20,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('backend/tag/create',[\App\Http\Controllers\Backend\TagController::class,'create'])->name('backend.tag.create');
+Route::get('backend/tag',[\App\Http\Controllers\Backend\TagController::class,'index'])->name('backend.tag.index');
