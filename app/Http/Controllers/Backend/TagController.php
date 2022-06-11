@@ -15,10 +15,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        //calling view file
-        //$data = Employee::all(); //fetch all employee data
-        //$data = Employee::where('phone','>',50)->get();//whose phone number is great than 50
-        //$data = Employee::where('phone','>',50)->orderby('name')->get();//display by name order
+
         $data = tag::all();
         return view('backend.tag.index', compact('data'));
     }
@@ -74,18 +71,18 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($tags_id)
+    function edit($id)
     {
         try{
-            $tag = Tag::find($tags_id);
-            if(!$tag){
+            $data = Tag::find($id);
+            if(!$data){
                 request()->session()->flash('error','Error: Invalid Request');
                 return redirect()->route('tag.index');
             }
         }catch(\Exception $exception){
             request()->session()->flash('error','Error:'.$exception->getMessage());
         }
-        return view('backend.tag.edit',compact('tag'));
+        return view('backend.tag.edit',compact('data'));
     }
 
     /**
