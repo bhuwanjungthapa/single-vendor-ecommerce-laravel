@@ -22,30 +22,51 @@
     <!-- Main content -->
     <section class="content">
 
-        <!-- Default box -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">List Tag</h3>
+      <div>
+          @if(session('success'))
+              <p style="background: green; padding:10px">{{session('success')}}</p>
 
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body">
-                Start creating your amazing application!
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-                Footer
-            </div>
-            <!-- /.card-footer-->
-        </div>
-        <!-- /.card -->
+          @endif
+          @if(session('error'))
+              <p style="background: red">{{session('error')}}</p>
+          @endif
+          <table>
+
+              <tr>
+                  <th>S.No</th>
+                  <th>Id</th>
+                  <th>Tag Name</th>
+                  <th>Status</th>
+                  <th>Slug</th>
+                  <th>Created By</th>
+                  <th>Updated By</th>
+                  <th>Created Date</th>
+                  <th>Updated Date</th>
+                  <th>Deleted Date</th>
+                  <th>Action</th>
+
+              </tr>
+              @foreach ( $data as $d)
+                  <tr>
+
+
+                      <th>{{$d->i+1}}</th>
+                      <th>{{$d->tags_id}}</th>
+                      <th>{{$d->title}}</th>
+                      <th>{{$d->status}}</th>
+                      <th>{{$d->slug}}</th>
+                      <th>{{auth()->user()->name}}</th>
+                      <th>{{auth()->user()->name}}</th>
+                      <th>{{$d->created_at}}</th>
+                      <th>{{$d->updated_at}}</th>
+                      <th>{{$d->deleted_at}}</th>
+                      <td><a href="{{}}">View  details</a></td>
+
+                  </tr>
+              @endforeach
+          </table>
+
+      </div>
 
     </section>
     <!-- /.content -->

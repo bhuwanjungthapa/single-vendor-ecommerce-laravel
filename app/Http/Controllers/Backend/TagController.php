@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\backend\Tag;
 
 class TagController extends Controller
 {
@@ -15,7 +16,11 @@ class TagController extends Controller
     public function index()
     {
         //calling view file
-        return view('backend.tag.index');
+        //$data = Employee::all(); //fetch all employee data
+        //$data = Employee::where('phone','>',50)->get();//whose phone number is great than 50
+        //$data = Employee::where('phone','>',50)->orderby('name')->get();//display by name order
+        $data = tag::all();
+        return view('backend.tag.index', compact('data'));
     }
 
     /**
@@ -25,7 +30,8 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        //calling create view
+        return view('backend.tag.create');
     }
 
     /**
@@ -36,7 +42,19 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //store
+        try{
+           $tag=Tag::create($request->all());
+           if($tag){
+               $request->session()->flash('success','Tag added successfuly');
+           }else{
+               $request->session()->flash('error','Tag addition failed');
+           }
+        }
+        catch (\Exception $exception){
+            $request->session()->flash('error','Error'.$exception->getMessage());
+        }
+        return redirect()->route('tag.index');
     }
 
     /**
