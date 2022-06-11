@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','Category list')
+@section('title','Tags')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -21,7 +21,7 @@
 
     <!-- Main content -->
     <section class="content">
-
+        <?php $n = 0; ?>
       <div>
           @if(session('success'))
               <p style="background: green; padding:10px">{{session('success')}}</p>
@@ -30,7 +30,8 @@
           @if(session('error'))
               <p style="background: red">{{session('error')}}</p>
           @endif
-          <table>
+
+          <table class="table table-sm">
 
               <tr>
                   <th>S.No</th>
@@ -46,21 +47,29 @@
                   <th>Action</th>
 
               </tr>
+              <?php $n++; ?>
               @foreach ( $data as $d)
                   <tr>
-
-
-                      <th>{{$d->i+1}}</th>
+                      <th>{{ $n++ }}</th>
                       <th>{{$d->tags_id}}</th>
                       <th>{{$d->title}}</th>
                       <th>{{$d->status}}</th>
                       <th>{{$d->slug}}</th>
-                      <th>{{auth()->user()->name}}</th>
-                      <th>{{auth()->user()->name}}</th>
+                      <th>{{DB::table('users')->where('id', $d->created_by)->value('name')}}</th>
+                      <th>{{DB::table('users')->where('id', $d->updated_by)->value('name')}}</th>
                       <th>{{$d->created_at}}</th>
                       <th>{{$d->updated_at}}</th>
                       <th>{{$d->deleted_at}}</th>
-                      <td><a href="{{}}">View  details</a></td>
+                      <td>
+                          <a href="{{route('tag.edit',$d->tags_id)}}" methods="post">Edit</a>
+                          {{--<a href="{{route('tag.index',$d->id)}}">Delete</a>--}}
+                         {{-- <form action="{{route('tag.index',$d->id)}}" method="post">
+                              <input type="hidden" name="_method" value="DELETE">
+                              @csrf
+                              <input type="submit" value="Delete">
+                          </form>--}}
+                      </td>
+                      </td>
 
                   </tr>
               @endforeach

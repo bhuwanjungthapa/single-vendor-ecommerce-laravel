@@ -74,9 +74,18 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($tags_id)
     {
-        //
+        try{
+            $tag = Tag::find($tags_id);
+            if(!$tag){
+                request()->session()->flash('error','Error: Invalid Request');
+                return redirect()->route('tag.index');
+            }
+        }catch(\Exception $exception){
+            request()->session()->flash('error','Error:'.$exception->getMessage());
+        }
+        return view('backend.tag.edit',compact('tag'));
     }
 
     /**
@@ -88,8 +97,24 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $tag = Employee::find($id);
+            if(!$tag)
+            {
+                request()->session()->flash('error','Error: Invalid Request');
+                return redirect()->route('employee.index');
+            }
+            if ($tag->update($request->all())){
+                $request->session()->flash('success','Tag Updated Successfully!!');
+            }else{
+                $request->session()->flash('error','Tag Update Failed!!');
+            }
+        }catch(\Exception $exception){
+            $request->session()->flash('error','Error: ' . $exception->getMessage());
+        }
+        return redirect()->route("tag.index");
     }
+
 
     /**
      * Remove the specified resource from storage.

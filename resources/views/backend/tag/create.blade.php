@@ -15,17 +15,33 @@
 
 
     <section class="content">
-        <div>
+        <div class="form-group">
             <form action="{{route('tag.store')}}" method="post">
                 @csrf
-                <label for="name">Tag Title:</label>
-                <input type="text" id="tag" name="title"><br><br>
-                <label for="price">Slug</label>
-                <input type="text" id="slug" name="slug" placeholder="same as title"><br><br>
-                <label for="price">Status</label>
-                <input type="number" id="status" name="status"><br><br>
+                <div class="form-group row">
+                    <label for="title" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="title">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="slug" class="col-sm-2 col-form-label">Slug</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="slug" placeholder="Same as Title">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="status" class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="status">
+                    </div>
+                </div>
                 <input type="hidden" value="{{auth()->user()->id}}" name="created_by">
-                <input type="submit">
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
             </form>
         </div>
     </section>
