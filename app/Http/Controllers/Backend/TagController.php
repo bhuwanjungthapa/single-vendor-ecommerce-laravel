@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\backend\Tag;
+use App\Models\User;
 
 class TagController extends Controller
 {
@@ -74,15 +75,17 @@ class TagController extends Controller
     function edit($id)
     {
         try{
+            $userid = Tag::all();
             $data = Tag::find($id);
             if(!$data){
                 request()->session()->flash('error','Error: Invalid Request');
                 return redirect()->route('tag.index');
+
             }
         }catch(\Exception $exception){
             request()->session()->flash('error','Error:'.$exception->getMessage());
         }
-        return view('backend.tag.edit',compact('data'));
+        return view('backend.tag.edit', compact('data','userid'));
     }
 
     /**
@@ -95,13 +98,13 @@ class TagController extends Controller
     public function update(Request $request, $id)
     {
         try{
-            $tag = Employee::find($id);
-            if(!$tag)
+            $data = Tag::find($id);
+            if(!$data)
             {
                 request()->session()->flash('error','Error: Invalid Request');
-                return redirect()->route('employee.index');
+                return redirect()->route('tag.index');
             }
-            if ($tag->update($request->all())){
+            if ($data->update($request->all())){
                 $request->session()->flash('success','Tag Updated Successfully!!');
             }else{
                 $request->session()->flash('error','Tag Update Failed!!');

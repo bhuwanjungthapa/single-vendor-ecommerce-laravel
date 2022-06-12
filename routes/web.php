@@ -25,4 +25,4 @@ Route::get('tag/create',[\App\Http\Controllers\Backend\TagController::class,'cre
 Route::post('tag/store',[\App\Http\Controllers\Backend\TagController::class,'store'])->name('tag.store');
 Route::get('tag',[\App\Http\Controllers\Backend\TagController::class,'index'])->name('tag.index');
 Route::get('tag/{id}/edit',[\App\Http\Controllers\Backend\TagController::class,'edit'])->name('tag.edit');
-Route::post('tag/{id}',[\App\Http\Controllers\Backend\TagController::class,'update'])->name('tag.update');
+Route::put('tag/{id}',[\App\Http\Controllers\Backend\TagController::class,'update'])->name('tag.update');

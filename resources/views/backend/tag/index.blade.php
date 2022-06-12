@@ -61,7 +61,7 @@
                       <th>{{$d->updated_at}}</th>
                       <th>{{$d->deleted_at}}</th>
                       <td>
-                          <a href="{{route('tag.edit',$d->tags_id)}}">Edit</a>
+                          <a href="{{route('tag.edit',$d->id)}}">Edit</a>
                           {{--<a href="{{route('tag.index',$d->id)}}">Delete</a>--}}
                          {{-- <form action="{{route('tag.index',$d->id)}}" method="post">
                               <input type="hidden" name="_method" value="DELETE">
