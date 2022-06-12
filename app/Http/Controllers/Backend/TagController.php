@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\backend\Tag;
 use App\Models\User;
+use function PHPUnit\Framework\returnValueMap;
 
 class TagController extends Controller
 {
@@ -122,8 +123,21 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    function destroy(Request $request,$id){
+
+        try{
+            $tag = Tag::find($id);
+            if($tag->delete()){
+                $request->session()->flash('success','Deleted Successfully!!');
+            }else{
+                $request->session()->flash('error','Deletion failed!!');
+            }
+        }
+        catch(\Exception $exception){
+            $request->session()->flash('error','Error: ' . $exception->getMessage());
+        }
+        /*$employee=Employee::find($id);
+        $employee=delete();*/
+        return redirect()->route('tag.index');
     }
 }

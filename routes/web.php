@@ -26,3 +26,4 @@ Route::post('tag/store',[\App\Http\Controllers\Backend\TagController::class,'sto
 Route::get('tag',[\App\Http\Controllers\Backend\TagController::class,'index'])->name('tag.index');
 Route::get('tag/{id}/edit',[\App\Http\Controllers\Backend\TagController::class,'edit'])->name('tag.edit');
 Route::put('tag/{id}',[\App\Http\Controllers\Backend\TagController::class,'update'])->name('tag.update');
+Route::delete('tag/{id}',[\App\Http\Controllers\Backend\TagController::class,'destroy'])->name('tag.destroy');
