@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('product_tag', function (Blueprint $table) {
-            $table->id('product_tag_id');
+            $table->id('id');
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('updated_by')->references('id')->on('users');
             $table->unsignedBigInteger('tags_id')->unsigned();
-            $table->foreign('tags_id')->references('tags_id')->on('tags')->onDelete('cascade');
+            $table->foreign('tags_id')->references('id')->on('tags')->onDelete('cascade');
             $table->unsignedBigInteger('products_id')->unsigned();
-            $table->foreign('products_id')->references('products_id')->on('products')->onDelete('cascade');
+            $table->foreign('products_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }
