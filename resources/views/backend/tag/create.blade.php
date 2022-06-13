@@ -1,52 +1,82 @@
 @extends('layouts.backend')
-@section('title','Category list')
-
-@section('content')
+@section('title','Tag') @section('content')
+    <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>Create New Tag</h1>
                 </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Tag</li>
+                    </ol>
+                </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.container-fluid -->
     </section>
 
-
-
+    <!-- Main content -->
     <section class="content">
-        <div class="form-group">
+
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"> Tag</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
             <form action="{{route('tag.store')}}" method="post">
                 @csrf
-                <div class="form-group row">
-                    <label for="title" class="col-sm-2 col-form-label">Title</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="title">
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" class="form-control" id="title" placeholder="Enter Title">
                     </div>
+                    <div class="form-group">
+                        <label for="status">Slug</label>
+                        <input type="text" name="slug" class="form-control" id="slug" placeholder="Status">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label><br>
+                        <input type="radio" name="status" value="1"> Enable<br>
+                        <input type="radio" name="status" value="2"> Disable<br>
+                    </div>
+
+                    <input type="hidden" value="{{auth()->user()->id}}" name="created_by">
+
+
                 </div>
-                <div class="form-group row">
-                    <label for="slug" class="col-sm-2 col-form-label">Slug</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="slug" placeholder="Same as Title">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="status" class="col-sm-2 col-form-label">Status</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" name="status">
-                    </div>
-                </div>
-                <input type="hidden" value="{{auth()->user()->id}}" name="created_by">
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
+
+            <!-- /.card-body -->
+
         </div>
+        <!-- /.card -->
+
     </section>
-
-
-
-
+    <!-- /.content -->
+@endsection
+@section('js')
+    <script>
+        $("#title").keyup(function() {
+            var Text = $(this).val();
+            Text = Text.toLowerCase();
+            Text = Text.replace(/[^a-zA-Z0-9]+/g,'-');
+            $("#slug").val(Text);
+        });
+    </script>
 @endsection

@@ -35,19 +35,7 @@
                             <input type="number" class="form-control" name="status" value="{{$data->status}}">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="created_by" class="col-sm-2 col-form-label">Created By</label>
-                    <select id="cars" name="cars">
-                        <option value="{{DB::table('users')->where('id', $data->created_by)->value('id')}}">{{DB::table('users')->where('id', $data->created_by)->value('name')}}</option>
-                        @foreach($userid as $d)
-                            <option value="{{DB::table('users')->where('id', $data->created_by)->value('id')}}">{{DB::table('users')->where('id', $data->created_by)->value('name')}}</option>
-                        @endforeach
 
-                    </select>
-                    <div class="col-sm-10">
-
-                    </div>
-                </div>
                 <input type="hidden" value="{{auth()->user()->id}}" name="updated_by">
 
                 <div class="form-group row">
