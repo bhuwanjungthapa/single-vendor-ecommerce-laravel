@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\backend\Customer;
+use App\Models\Backend\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -42,7 +42,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\backend\Customer  $customer
+     * @param  \App\Models\Backend\Customer  $customer
      * @return \Illuminate\Http\Response
      */
     public function show(Customer $customer)
@@ -53,7 +53,7 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\backend\Customer  $customer
+     * @param  \App\Models\Backend\Customer  $customer
      * @return \Illuminate\Http\Response
      */
     public function edit(Customer $customer)
@@ -65,7 +65,7 @@ class CustomerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\backend\Customer  $customer
+     * @param  \App\Models\Backend\Customer  $customer
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Customer $customer)
@@ -76,7 +76,7 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\backend\Customer  $customer
+     * @param  \App\Models\Backend\Customer  $customer
      * @return \Illuminate\Http\Response
      */
     public function destroy(Customer $customer)

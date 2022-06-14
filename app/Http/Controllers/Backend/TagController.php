@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\backend\Tag;
+use App\Models\Backend\Tag;
 use App\Models\User;
 use function PHPUnit\Framework\returnValueMap;
 
