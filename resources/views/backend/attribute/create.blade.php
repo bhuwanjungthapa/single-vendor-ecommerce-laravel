@@ -41,7 +41,7 @@
 
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" name="title" class="form-control" id="title" placeholder="Enter Title">
+                        <input type="text" name="title" class="form-control" id="title" placeholder="Enter Title" required>
                     </div>
                     {{-- <div class="form-group">
                         <label for="slug">Slug</label>
@@ -58,7 +58,8 @@
 
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <input type="submit" class="btn btn-primary">
+                    <input type="reset" class="btn btn-primary" value="clear">
                 </div>
             </form>
 

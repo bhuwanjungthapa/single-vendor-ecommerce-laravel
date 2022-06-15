@@ -30,6 +30,7 @@ class TagController extends Controller
     public function create()
     {
         //calling create view
+
         return view('backend.tag.create');
     }
 
@@ -41,6 +42,11 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title'=>'required',
+            'slug'=>'required'
+        ]);
+        $request->request->add(['created_by'=>auth()->user()->id]);
         //store
         try{
            $tag=Tag::create($request->all());

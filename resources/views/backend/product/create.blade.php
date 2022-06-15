@@ -39,6 +39,26 @@
             @csrf
             <div class="card-body">
 
+
+                <div class="form-group">
+                    <label for="title">Category</label>
+                    <select class="form-control" id="category_id" name="category_id" >
+                        @foreach($data1['categories'] as $record)
+                            <option value="{{$record->id}}">{{$record->title}}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="title">Sub Category</label>
+                    <select class="form-control" id="sub_category_id " name="sub_category_id" >
+                        @foreach($data2['subcategories'] as $record)
+                            <option value="{{$record->id}}">{{$record->title}}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" name="title" class="form-control" id="title" placeholder="Enter Title">
@@ -97,8 +117,6 @@
                     <label for="meta_description">Meta Description</label>
                     <input type="text" name="meta_description" class="form-control" id="meta_description" placeholder="Enter meta_description">
                 </div>
-
-                <input type="hidden" value="{{auth()->user()->id}}" name="created_by">
 
 
             </div>

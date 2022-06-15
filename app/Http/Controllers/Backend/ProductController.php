@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\Product;
+use App\Models\Backend\Category;
+use App\Models\Backend\SubCategory;
 
 class ProductController extends Controller
 {
@@ -29,7 +31,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('backend.product.create');
+        $data1['categories'] = Category::all();
+        $data2['subcategories'] = SubCategory::all();
+        return view('backend.product.create',compact('data1','data2'));
     }
 
     /**
@@ -40,6 +44,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->request->add(['created_by'=>auth()->user()->id]);
         try{
             $product=Product::create($request->all());
             if($product){

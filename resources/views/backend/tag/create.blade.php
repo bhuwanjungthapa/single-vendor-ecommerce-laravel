@@ -41,24 +41,31 @@
 
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" name="title" class="form-control" id="title" placeholder="Enter Title">
+                        <input type="text" name="title" class="form-control" id="title"  value="{{old('title')}}" placeholder="Enter Title">
+                        @error('title')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="status">Slug</label>
-                        <input type="text" name="slug" class="form-control" id="slug" placeholder="Status">
+                        <input type="text" name="slug" class="form-control" id="slug" value="{{old('slug')}}" placeholder="Status">
+                        @error('title')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="status">Status</label><br>
                         <input type="radio" name="status" value="1"> Enable<br>
-                        <input type="radio" name="status" value="2"> Disable<br>
+                        <input type="radio" name="status" value="2" > Disable<br>
                     </div>
 
-                    <input type="hidden" value="{{auth()->user()->id}}" name="created_by">
+                    {{--<input type="hidden" value="{{auth()->user()->id}}" name="created_by">--}}
 
 
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <input type="submit" class="btn btn-primary">
+                        <input type="reset" class="btn btn-primary">
                 </div>
             </form>
 
