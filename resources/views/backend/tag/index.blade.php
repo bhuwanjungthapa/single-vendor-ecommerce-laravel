@@ -43,7 +43,6 @@
                   <th>Updated By</th>
                   <th>Created Date</th>
                   <th>Updated Date</th>
-                  <th>Deleted Date</th>
                   <th>Action</th>
 
               </tr>
@@ -51,24 +50,18 @@
               @foreach ( $data as $d)
                   <tr>
                       <td>{{ $n++ }}</td>
-                      <td>{{$d->tags_id}}</td>
+                      <td>{{$d->id}}</td>
                       <td>{{$d->title}}</td>
-                      <td>{{$d->status}}</td>
+                      <td>
+                         @include('backend.include.status',['status'=>$d->status])
+                      </td>
                       <td>{{$d->slug}}</td>
                       <td>{{DB::table('users')->where('id', $d->created_by)->value('name')}}</td>
                       <td>{{DB::table('users')->where('id', $d->updated_by)->value('name')}}</td>
                       <td>{{$d->created_at}}</td>
                       <td>{{$d->updated_at}}</td>
-                      <td>{{$d->deleted_at}}</td>
                       <td>
                           <a href="{{route('tag.edit',$d->id)}}">Edit</a>
-
-                          {{--<a href="{{route('tag.index',$d->id)}}">Delete</a>--}}
-                         {{-- <form action="{{route('tag.index',$d->id)}}" method="post">
-                              <input type="hidden" name="_method" value="DELETE">
-                              @csrf
-                              <input type="submit" value="Delete">
-                          </form>--}}
                       </td>
                       <td><form action="{{route('tag.destroy',$d->id)}}" method="post">
                               <input type="hidden" name="_method" value="DELETE">

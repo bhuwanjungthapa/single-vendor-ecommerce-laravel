@@ -70,6 +70,6 @@ Route::get('subcategories/create',[\App\Http\Controllers\Backend\SubcategoryCont
 Route::post('subcategories/store',[\App\Http\Controllers\Backend\SubcategoryController::class,'store'])->name('subcategories.store');
 Route::get('subcategories',[\App\Http\Controllers\Backend\SubcategoryController::class,'index'])->name('subcategories.index');
 Route::post('subcategories/{id}/show',[\App\Http\Controllers\Backend\SubcategoryController::class,'store'])->name('subcategories.show');
-Route::get('subcategories/{id}/edit',[\App\Http\Controllers\Backend\SubcategoryController::class,'edit'])->name('subcategories.edit');
+Route::get('subcategories/{id}/edit',[\App\Http\Controllers\SubcategoryController::class,'edit'])->name('subcategories.edit');
 Route::put('subcategories/{id}',[\App\Http\Controllers\Backend\SubcategoryController::class,'update'])->name('subcategories.update');
 Route::delete('subcategories/{id}',[\App\Http\Controllers\Backend\SubcategoryController::class,'destroy'])->name('subcategories.destroy');

@@ -23,7 +23,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">List Option</h3>
+                <h3 class="card-title">Attribute List</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-bordered">
+                <table class="table table-sm">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -58,14 +58,22 @@
                             {{-- <td>{{$d->slug}}</td> --}}
                             <td>{{$d->status}}</td>
                             <td>{{DB::table('users')->where('id', $d->created_by)->value('name')}}</td>
-                            <td>{{DB::table('users')->where('id', $d->updated_by)->value('name')}}</td>
+                            <td>
+                                @if(!empty($d->updated_by))
+                                    {{DB::table('users')->where('id', $d->updated_by)->value('name')}}
+                                @endif
+                            </td>
                             <td>{{$d->created_at}}</td>
-                            <th><a href="{{route('attribute.show',$d->id)}}">ViewDetails</a>
+                            <td>
                                 <a href="{{route('attribute.edit',$d->id)}}">Edit</a>
-                                <form action="{{route('attribute.destroy',$d->id)}}" method="post">
-                                    <input type="hidden" name="_method" value="DELETE"> @csrf
+                            </td>
+                            <td><form action="{{route('attribute.destroy',$d->id)}}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    @csrf
                                     <input type="submit" value="Delete">
                                 </form>
+                            </td>
+                            </td>
 
                             </th>
 

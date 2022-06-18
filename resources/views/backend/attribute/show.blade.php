@@ -42,7 +42,7 @@
 
                     <tr>
                         <th>Title</th>
-                        <td>{{$option->title}}</td>
+                        <td>{{$attribute->title}}</td>
                     </tr>
 
                     {{-- <tr>
@@ -51,23 +51,23 @@
                     </tr> --}}
                     <tr>
                         <th>Status</th>
-                        <td>{{$option->status}}</td>
+                        <td>{{$attribute->status}}</td>
                     </tr>
                     <tr>
                         <th>Created By</th>
-                        <td>{{DB::table('users')->where('id', $option->created_by)->value('name')}}</td>
+                        <td>{{DB::table('users')->where('id', $attribute->created_by)->value('name')}}</td>
                     </tr>
 
                     <tr>
                         <th>Updated By</th>
-                        <td>{{DB::table('users')->where('id', $option->updated_by)->value('name')}}</td>
+                        <td>{{DB::table('users')->where('id', $attribute->updated_by)->value('name')}}</td>
                     </tr>
 
 
 
                     <tr>
                         <th>Created At</th>
-                        <td>{{$option->created_at}}</td>
+                        <td>{{$attribute->created_at}}</td>
 
 
 
