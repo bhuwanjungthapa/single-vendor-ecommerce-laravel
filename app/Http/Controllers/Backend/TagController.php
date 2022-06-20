@@ -18,7 +18,7 @@ class TagController extends Controller
     public function index()
     {
 
-        $data = tag::all();
+        $data['records'] = tag::all();
         return view('backend.tag.index', compact('data'));
     }
 

@@ -47,26 +47,31 @@
 
               </tr>
               <?php $n++; ?>
-              @foreach ( $data as $d)
+              @foreach($data['records'] as $record)
                   <tr>
                       <td>{{ $n++ }}</td>
-                      <td>{{$d->id}}</td>
-                      <td>{{$d->title}}</td>
+                      <td>{{$record->id}}</td>
+                      <td>{{$record->title}}</td>
                       <td>
-                         @include('backend.include.status',['status'=>$d->status])
+                         @include('backend.include.status',['status'=>$record->status])
                       </td>
-                      <td>{{$d->slug}}</td>
-                      <td>{{DB::table('users')->where('id', $d->created_by)->value('name')}}</td>
-                      <td>{{DB::table('users')->where('id', $d->updated_by)->value('name')}}</td>
-                      <td>{{$d->created_at}}</td>
-                      <td>{{$d->updated_at}}</td>
+                      <td>{{$record->slug}}</td>
+                      <td>{{$record->createdBy->name}}</td>
+
                       <td>
-                          <a href="{{route('tag.edit',$d->id)}}">Edit</a>
+                          @if(!empty($record->updated_by))
+                              {{$record->updatedBy->name}}
+                          @endif
                       </td>
-                      <td><form action="{{route('tag.destroy',$d->id)}}" method="post">
+                      <td>{{$record->created_at}}</td>
+                      <td>{{$record->updated_at}}</td>
+                      <td>
+                          <a href="{{route('tag.edit',$record->id)}}" class="btn btn-warning">Edit</a>
+                      </td>
+                      <td><form action="{{route('tag.destroy',$record->id)}}" method="post">
                               <input type="hidden" name="_method" value="DELETE">
                               @csrf
-                              <input type="submit" value="Delete">
+                              <input class="btn btn-danger" type="submit" value="Delete">
                           </form>
                       </td>
                       </td>
