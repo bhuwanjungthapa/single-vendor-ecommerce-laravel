@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('phone');
             $table->string('image')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

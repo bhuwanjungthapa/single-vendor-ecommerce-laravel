@@ -129,21 +129,73 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    function destroy(Request $request,$id){
+    public function destroy($id)
+    {
+        $data['record']=Tag::find($id);
+        if(!$data['record' ]){
+            request()->session()->flash('error',"Error:Invalid Request");
+            return redirect()->route('tag.index');
 
-        try{
-            $tag = Tag::find($id);
-            if($tag->delete()){
-                $request->session()->flash('success','Deleted Successfully!!');
+        }
+        if($data["record"]->delete())
+        {
+            request()->session()->flash('success',"Successfully Deleted");
+
+        }else{
+            request()->session()->flash('error',"Error:Delete Failed ");
+
+        }
+        return redirect()->route('tag.index');
+    }
+    public function trash()
+    {
+        $data['records'] = Tag::onlyTrashed()->get();
+        return view('backend.tag.trash', compact('data'));
+
+
+    }
+    public function restore(Request $request, $id)
+    {
+        try {
+            $data['record'] = Tag::onlyTrashed()->where('id', $id)->first();
+            if (!$data['record']) {
+                $data['record']->restore();
+                request()->session()->flash('error', "Error:Invalid Request");
+                return redirect()->route('tag.index');
+            }
+            /*$request->request->add(['updated_by'=>auth()->user()->id]);
+            $record=$data['record']->update($request->all());*/
+            if ($data['record']){
+                $data['record']->restore();
+            request()->session()->flash('success', "Tag Restored");
             }else{
-                $request->session()->flash('error','Deletion failed!!');
+                request()->session()->flash('error',"Tag Restore  Failed ");
             }
         }
         catch(\Exception $exception){
-            $request->session()->flash('error','Error: ' . $exception->getMessage());
+            request()->session()->flash('error',"Error:".$exception->getMessage());
+
         }
-        /*$employee=Employee::find($id);
-        $employee=delete();*/
+
+        return redirect()->route('tag.index');
+    }
+    public function permanentDelete($id)
+    {
+        $data['record']=Tag::onlyTrashed()->where('id',$id)->first();
+        if(!$data['record' ]){
+            request()->session()->flash('error',"Error:Invalid Request");
+            return redirect()->route('tag.index');
+
+        }
+        if($data["record"]->forceDelete())
+        {
+            request()->session()->flash('success',"Successfully Deleted");
+
+        }else{
+            request()->session()->flash('error',"Error:Delete Failed ");
+
+        }
         return redirect()->route('tag.index');
     }
 }
+

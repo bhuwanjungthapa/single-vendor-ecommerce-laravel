@@ -22,6 +22,10 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Tag
+Route:: get('tag/trash',[\App\Http\Controllers\Backend\TagController::class,'trash'])->name('tag.trash');
+Route:: post('tag/restore/{id}',[\App\Http\Controllers\Backend\TagController::class,'restore'])->name('tag.restore');
+Route:: delete ('tag/force_delete/{id}',[\App\Http\Controllers\Backend\TagController::class,'permanentDelete'])->name('tag.force_delete');
+
 Route::get('tag/create',[\App\Http\Controllers\Backend\TagController::class,'create'])->name('tag.create');
 Route::post('tag/store',[\App\Http\Controllers\Backend\TagController::class,'store'])->name('tag.store');
 Route::get('tag',[\App\Http\Controllers\Backend\TagController::class,'index'])->name('tag.index');
@@ -70,6 +74,6 @@ Route::get('subcategories/create',[\App\Http\Controllers\Backend\SubcategoryCont
 Route::post('subcategories/store',[\App\Http\Controllers\Backend\SubcategoryController::class,'store'])->name('subcategories.store');
 Route::get('subcategories',[\App\Http\Controllers\Backend\SubcategoryController::class,'index'])->name('subcategories.index');
 Route::post('subcategories/{id}/show',[\App\Http\Controllers\Backend\SubcategoryController::class,'store'])->name('subcategories.show');
-Route::get('subcategories/{id}/edit',[\App\Http\Controllers\SubcategoryController::class,'edit'])->name('subcategories.edit');
+Route::get('subcategories/{id}/edit',[\App\Http\Controllers\Backend\SubcategoryController::class,'edit'])->name('subcategories.edit');
 Route::put('subcategories/{id}',[\App\Http\Controllers\Backend\SubcategoryController::class,'update'])->name('subcategories.update');
 Route::delete('subcategories/{id}',[\App\Http\Controllers\Backend\SubcategoryController::class,'destroy'])->name('subcategories.destroy');

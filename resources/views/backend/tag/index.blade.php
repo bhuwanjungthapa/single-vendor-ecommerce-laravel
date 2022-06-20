@@ -21,6 +21,23 @@
 
     <!-- Main content -->
     <section class="content">
+
+        <div class="card-header">
+            <h3 class="card-title">List Tag
+                <a href="{{route('tag.create')}}" class="btn btn-info">Create</a>
+                <a href="{{route('tag.trash')}}" class="btn btn-info">Trash</a>
+
+            </h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
         <?php $n = 0; ?>
       <div>
           @if(session('success'))

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign('updated_by')->references('id')->on('users');
             $table->string('title');
             $table->string('slug')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('tags_id')->references('id')->on('tags')->onDelete('cascade');
             $table->unsignedBigInteger('products_id')->unsigned();
             $table->foreign('products_id')->references('id')->on('products')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
