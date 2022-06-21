@@ -3,13 +3,23 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Backend\BackendBackendBaseController;
 use Illuminate\Http\Request;
 use App\Models\Backend\Tag;
 use App\Models\User;
 use function PHPUnit\Framework\returnValueMap;
 
-class TagController extends Controller
+class TagController extends BackendBackendBaseController
 {
+
+    protected $base_route = 'backend.tag.';
+    protected $base_view = 'backend.tag.';
+    protected $module = 'Tag';
+
+    public function __construct()
+    {
+        $this->module = new Tag();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +28,8 @@ class TagController extends Controller
     public function index()
     {
 
-        $data['records'] = tag::all();
-        return view('backend.tag.index', compact('data'));
+        $data['records'] = $this->module->all();
+        return view($this->__loadDataToView($this->base_view.'index'), compact('data'));
     }
 
     /**
@@ -31,7 +41,7 @@ class TagController extends Controller
     {
         //calling create view
 
-        return view('backend.tag.create');
+        return view($this->__loadDataToView($this->base_view.'create'));
     }
 
     /**
@@ -49,7 +59,7 @@ class TagController extends Controller
         $request->request->add(['created_by'=>auth()->user()->id]);
         //store
         try{
-           $tag=Tag::create($request->all());
+           $tag=$this->module->create($request->all());
            if($tag){
                $request->session()->flash('success','Tag added successfuly');
            }else{
@@ -59,7 +69,7 @@ class TagController extends Controller
         catch (\Exception $exception){
             $request->session()->flash('error','Error'.$exception->getMessage());
         }
-        return redirect()->route('tag.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
 
     /**
@@ -83,16 +93,16 @@ class TagController extends Controller
     {
         try{
             $userid = Tag::all();
-            $data = Tag::find($id);
+            $data = $this->module->find($id);
             if(!$data){
                 request()->session()->flash('error','Error: Invalid Request');
-                return redirect()->route('tag.index');
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
 
             }
         }catch(\Exception $exception){
             request()->session()->flash('error','Error:'.$exception->getMessage());
         }
-        return view('backend.tag.edit', compact('data','userid'));
+        return view($this->__loadDataToView($this->base_view.'edit'), compact('data','userid'));
     }
 
     /**
@@ -105,11 +115,11 @@ class TagController extends Controller
     public function update(Request $request, $id)
     {
         try{
-            $data = Tag::find($id);
+            $data = $this->module->find($id);
             if(!$data)
             {
                 request()->session()->flash('error','Error: Invalid Request');
-                return redirect()->route('tag.index');
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
             if ($data->update($request->all())){
                 $request->session()->flash('success','Tag Updated Successfully!!');
@@ -119,7 +129,7 @@ class TagController extends Controller
         }catch(\Exception $exception){
             $request->session()->flash('error','Error: ' . $exception->getMessage());
         }
-        return redirect()->route("tag.index");
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
 
 
@@ -131,10 +141,10 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        $data['record']=Tag::find($id);
+        $data['record']=$this->module->find($id);
         if(!$data['record' ]){
             request()->session()->flash('error',"Error:Invalid Request");
-            return redirect()->route('tag.index');
+            return redirect()->route($this->__loadDataToView($this->base_route.'index'));
 
         }
         if($data["record"]->delete())
@@ -145,23 +155,23 @@ class TagController extends Controller
             request()->session()->flash('error',"Error:Delete Failed ");
 
         }
-        return redirect()->route('tag.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
     public function trash()
     {
-        $data['records'] = Tag::onlyTrashed()->get();
-        return view('backend.tag.trash', compact('data'));
+        $data['records'] = $this->module->onlyTrashed()->get();
+        return view($this->__loadDataToView($this->base_view.'trash'), compact('data'));
 
 
     }
     public function restore(Request $request, $id)
     {
         try {
-            $data['record'] = Tag::onlyTrashed()->where('id', $id)->first();
+            $data['record'] = $this->module->onlyTrashed()->where('id', $id)->first();
             if (!$data['record']) {
                 $data['record']->restore();
                 request()->session()->flash('error', "Error:Invalid Request");
-                return redirect()->route('tag.index');
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
             /*$request->request->add(['updated_by'=>auth()->user()->id]);
             $record=$data['record']->update($request->all());*/
@@ -177,14 +187,14 @@ class TagController extends Controller
 
         }
 
-        return redirect()->route('tag.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
     public function permanentDelete($id)
     {
-        $data['record']=Tag::onlyTrashed()->where('id',$id)->first();
+        $data['record']=$this->module->onlyTrashed()->where('id',$id)->first();
         if(!$data['record' ]){
             request()->session()->flash('error',"Error:Invalid Request");
-            return redirect()->route('tag.index');
+            return redirect()->route($this->__loadDataToView($this->base_route.'index'));
 
         }
         if($data["record"]->forceDelete())
@@ -195,7 +205,7 @@ class TagController extends Controller
             request()->session()->flash('error',"Error:Delete Failed ");
 
         }
-        return redirect()->route('tag.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
 }
 

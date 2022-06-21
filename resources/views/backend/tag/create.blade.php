@@ -35,7 +35,7 @@
                     </button>
                 </div>
             </div>
-            <form action="{{route('tag.store')}}" method="post">
+            <form action="{{route($base_route.'store')}}" method="post">
                 @csrf
                 <div class="card-body">
 

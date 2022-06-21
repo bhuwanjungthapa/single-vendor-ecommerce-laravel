@@ -14,7 +14,7 @@
 
     <section class="content">
         <div class="form-group">
-            <form action="{{route('tag.update',$data->id)}}" method="post">
+            <form action="{{route($base_route.'update',$data->id)}}" method="post">
                 <input type="hidden" name="_method" value="PUT">
                 @csrf
                 <div class="form-group row">

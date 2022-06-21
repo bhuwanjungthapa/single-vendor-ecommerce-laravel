@@ -22,16 +22,18 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Tag
-Route:: get('tag/trash',[\App\Http\Controllers\Backend\TagController::class,'trash'])->name('tag.trash');
-Route:: post('tag/restore/{id}',[\App\Http\Controllers\Backend\TagController::class,'restore'])->name('tag.restore');
-Route:: delete ('tag/force_delete/{id}',[\App\Http\Controllers\Backend\TagController::class,'permanentDelete'])->name('tag.force_delete');
+Route::prefix('backend/tag/')->name('backend.tag.')->group(function (){
+    Route:: get('trash', [\App\Http\Controllers\Backend\TagController::class, 'trash'])->name('trash');
+    Route:: post('restore/{id}', [\App\Http\Controllers\Backend\TagController::class, 'restore'])->name('restore');
+    Route:: delete('force_delete/{id}', [\App\Http\Controllers\Backend\TagController::class, 'permanentDelete'])->name('force_delete');
+    Route::get('create', [\App\Http\Controllers\Backend\TagController::class, 'create'])->name('create');
+    Route::post('store', [\App\Http\Controllers\Backend\TagController::class, 'store'])->name('store');
+    Route::get('', [\App\Http\Controllers\Backend\TagController::class, 'index'])->name('index');
+    Route::get('{id}/edit', [\App\Http\Controllers\Backend\TagController::class, 'edit'])->name('edit');
+    Route::put('{id}', [\App\Http\Controllers\Backend\TagController::class, 'update'])->name('update');
+    Route::delete('{id}', [\App\Http\Controllers\Backend\TagController::class, 'destroy'])->name('destroy');
+});
 
-Route::get('tag/create',[\App\Http\Controllers\Backend\TagController::class,'create'])->name('tag.create');
-Route::post('tag/store',[\App\Http\Controllers\Backend\TagController::class,'store'])->name('tag.store');
-Route::get('tag',[\App\Http\Controllers\Backend\TagController::class,'index'])->name('tag.index');
-Route::get('tag/{id}/edit',[\App\Http\Controllers\Backend\TagController::class,'edit'])->name('tag.edit');
-Route::put('tag/{id}',[\App\Http\Controllers\Backend\TagController::class,'update'])->name('tag.update');
-Route::delete('tag/{id}',[\App\Http\Controllers\Backend\TagController::class,'destroy'])->name('tag.destroy');
 
 //Attribute
 Route::get('attribute/create',[\App\Http\Controllers\Backend\AtttributeController::class,'create'])->name('attribute.create');

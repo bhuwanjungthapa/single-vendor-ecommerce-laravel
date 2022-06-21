@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','Tags')
+@section('title',$module.'Tags')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tag Management</h1>
+                    <h1>{{$module}} Management</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Tag</li>
+                        <li class="breadcrumb-item active">{{$module}}</li>
                     </ol>
                 </div>
             </div>
@@ -23,9 +23,9 @@
     <section class="content">
 
         <div class="card-header">
-            <h3 class="card-title">List Tag
-                <a href="{{route('tag.create')}}" class="btn btn-info">Create</a>
-                <a href="{{route('tag.trash')}}" class="btn btn-info">Trash</a>
+            <h3 class="card-title">List {{$module}}
+                <a href="{{route($base_route.'create')}}" class="btn btn-info">Create</a>
+                <a href="{{route($base_route.'trash')}}" class="btn btn-info">Trash</a>
 
             </h3>
 
@@ -83,9 +83,9 @@
                       <td>{{$record->created_at}}</td>
                       <td>{{$record->updated_at}}</td>
                       <td>
-                          <a href="{{route('tag.edit',$record->id)}}" class="btn btn-warning">Edit</a>
+                          <a href="{{route($base_route.'edit',$record->id)}}" class="btn btn-warning">Edit</a>
                       </td>
-                      <td><form action="{{route('tag.destroy',$record->id)}}" method="post">
+                      <td><form action="{{route($base_route.'destroy',$record->id)}}" method="post">
                               <input type="hidden" name="_method" value="DELETE">
                               @csrf
                               <input class="btn btn-danger" type="submit" value="Delete">

@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','Tags')
+@section('title',$module)
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -24,7 +24,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Trash
-                    <a href="{{route('tag.create')}}" class="btn btn-info">Create</a>
+                    <a href="{{route($base_route.'create')}}" class="btn btn-info">Create</a>
                 </h3>
 
                 <div class="card-tools">
@@ -83,11 +83,11 @@
                         <td>{{$record->updated_at}}</td>
 
                         <th>
-                            <form action="{{route('tag.restore',$record->id)}}" method="post" style="display:inline-block">
+                            <form action="{{route($base_route.'restore',$record->id)}}" method="post" style="display:inline-block">
                                 @csrf
                                 <input type="submit" class="btn btn-primary" value="Restore">
                             </form>
-                            <form action="{{route('tag.force_delete',$record->id)}}" method="post" style="display:inline-block">
+                            <form action="{{route($base_route.'force_delete',$record->id)}}" method="post" style="display:inline-block">
                                 @method("delete")
                                 @csrf
                                 <input type="submit" class="btn btn-danger" value="Delete">
