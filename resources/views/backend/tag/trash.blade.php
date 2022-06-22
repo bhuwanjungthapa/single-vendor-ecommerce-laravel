@@ -25,6 +25,7 @@
             <div class="card-header">
                 <h3 class="card-title">Trash
                     <a href="{{route($base_route.'create')}}" class="btn btn-info">Create</a>
+                    <a href="{{route($base_route.'index')}}" class="btn btn-info">List</a>
                 </h3>
 
                 <div class="card-tools">

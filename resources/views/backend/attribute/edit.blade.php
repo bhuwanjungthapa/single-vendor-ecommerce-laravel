@@ -1,11 +1,11 @@
 @extends('layouts.backend')
-@section('title','Tag') @section('content')
+@section('title',$module) @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Attribute Management</h1>
+                    <h1>{{$module}} Management</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -35,7 +35,7 @@
                     </button>
                 </div>
             </div>
-            <form action="{{route('attribute.update',$attribute->id)}}" method="post">
+            <form action="{{route($base_route.'update',$attribute->id)}}" method="post">
                 <input type="hidden" name="_method" value="PUT">
                 @csrf
                 <div class="card-body">

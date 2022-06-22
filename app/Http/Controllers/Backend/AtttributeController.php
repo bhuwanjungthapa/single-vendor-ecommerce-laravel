@@ -6,8 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\Atttribute;
 
-class AtttributeController extends Controller
+
+class AtttributeController extends BackendBackendBaseController
 {
+    protected $base_route = 'backend.attribute.';
+    protected $base_view = 'backend.attribute.';
+    protected $module = 'Attribute';
+
+    public function __construct()
+    {
+        $this->model = new Atttribute();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +24,8 @@ class AtttributeController extends Controller
      */
     public function index()
     {
-        $data = Atttribute::all();
-        return view('backend.attribute.index', compact('data'));
-
+        $data['records'] = $this->model->all();
+        return view($this->__loadDataToView($this->base_view.'index'), compact('data'));
 
     }
 
@@ -28,7 +36,7 @@ class AtttributeController extends Controller
      */
     public function create()
     {
-        return view('backend.attribute.create');
+        return view($this->__loadDataToView($this->base_view.'create'));
     }
 
     /**
@@ -39,8 +47,11 @@ class AtttributeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title'=>'required'
+        ]);
         try{
-            $attribute=Atttribute::create($request->all());
+            $attribute=$this->model->create($request->all());
             if($attribute){
                 $request->session()->flash('success','Attribute added successfuly');
             }else{
@@ -50,7 +61,7 @@ class AtttributeController extends Controller
         catch (\Exception $exception){
             $request->session()->flash('error','Error'.$exception->getMessage());
         }
-        return redirect()->route('attribute.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
 
 
@@ -62,8 +73,8 @@ class AtttributeController extends Controller
      */
     public function show($id)
     {
-        $attribute = Atttribute::find($id);
-        return view('backend.attribute.show',compact('attribute'));
+        $attribute = $this->model->find($id);
+        return view($this->__loadDataToView($this->base_view.'show'),compact('attribute'));
     }
 
     /**
@@ -76,18 +87,18 @@ class AtttributeController extends Controller
     {
         try
         {
-            $attribute = Atttribute::find($id);
+            $attribute = $this->model->find($id);
             if(!$attribute)
             {
                 request()->session()->flash('error','Error:Invalid Request');
-                return redirect()->route('attribute.index');
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
         }
         catch(Exception $exception)
         {
             request()->session()->flash('error','Error:'.$exception->getMessage());
         }
-        return view('backend.attribute.edit',compact('attribute'));
+        return view($this->__loadDataToView($this->base_view.'edit'),compact('attribute'));
     }
 
     /**
@@ -99,29 +110,22 @@ class AtttributeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try
-        {
-            $attribute = Atttribute::find($id);
-            if(!$attribute)
+        try{
+            $data = $this->model->find($id);
+            if(!$data)
             {
-                request()->session()->flash('error','Error:Invalid Request');
-                return redirect()->route('attribute.index');
+                request()->session()->flash('error','Error: Invalid Request');
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
-            if($attribute->update($request->all()))
-            {
-                request()->session()->flash('success','Updated');
-
-            }else
-            {
-                request()->session()->flash('error','Updated failed');
+            if ($data->update($request->all())){
+                $request->session()->flash('success','Tag Updated Successfully!!');
+            }else{
+                $request->session()->flash('error','Tag Update Failed!!');
             }
-
+        }catch(\Exception $exception){
+            $request->session()->flash('error','Error: ' . $exception->getMessage());
         }
-        catch(Exception $exception)
-        {
-            request()->session()->flash('error','Error:'.$exception->getMessage());
-        }
-        return redirect()->route('attribute.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
 
 
@@ -133,23 +137,70 @@ class AtttributeController extends Controller
      */
     public function destroy($id)
     {
-        try
-        {
-            $attribute = Atttribute::find($id);
-            if($attribute->delete())
-            {
-                request()->session()->flash('success','Attribute Deleted Successfully!!');
-            }
-            else
-            {
-                request()->session()->flash('error','Attribute Deleted Failed');
-            }
+        $data['record']=$this->model->find($id);
+        if(!$data['record' ]){
+            request()->session()->flash('error',"Error:Invalid Request");
+            return redirect()->route($this->__loadDataToView($this->base_route.'index'));
 
         }
-        catch(Exception $exception)
+        if($data["record"]->delete())
         {
-            request()->session()->flash('error','Error:'.$exception->getMessage());
+            request()->session()->flash('success',"Successfully Deleted");
+
+        }else{
+            request()->session()->flash('error',"Error:Delete Failed ");
+
         }
-        return redirect()->route('attribute.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+    }
+    public function trash()
+    {
+        $data['records'] = $this->model->onlyTrashed()->get();
+        return view($this->__loadDataToView($this->base_view.'trash'), compact('data'));
+
+
+    }
+    public function restore(Request $request, $id)
+    {
+        try {
+            $data['record'] = $this->model->onlyTrashed()->where('id', $id)->first();
+            if (!$data['record']) {
+                $data['record']->restore();
+                request()->session()->flash('error', "Error:Invalid Request");
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+            }
+            /*$request->request->add(['updated_by'=>auth()->user()->id]);
+            $record=$data['record']->update($request->all());*/
+            if ($data['record']){
+                $data['record']->restore();
+                request()->session()->flash('success', "Tag Restored");
+            }else{
+                request()->session()->flash('error',"Tag Restore  Failed ");
+            }
+        }
+        catch(\Exception $exception){
+            request()->session()->flash('error',"Error:".$exception->getMessage());
+
+        }
+
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+    }
+    public function permanentDelete($id)
+    {
+        $data['record']=$this->model->onlyTrashed()->where('id',$id)->first();
+        if(!$data['record' ]){
+            request()->session()->flash('error',"Error:Invalid Request");
+            return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+
+        }
+        if($data["record"]->forceDelete())
+        {
+            request()->session()->flash('success',"Successfully Deleted");
+
+        }else{
+            request()->session()->flash('error',"Error:Delete Failed ");
+
+        }
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
 }

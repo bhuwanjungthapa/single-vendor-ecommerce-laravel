@@ -18,7 +18,7 @@ class TagController extends BackendBackendBaseController
 
     public function __construct()
     {
-        $this->module = new Tag();
+        $this->model = new Tag();
     }
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class TagController extends BackendBackendBaseController
     public function index()
     {
 
-        $data['records'] = $this->module->all();
+        $data['records'] = $this->model->all();
         return view($this->__loadDataToView($this->base_view.'index'), compact('data'));
     }
 
@@ -59,7 +59,7 @@ class TagController extends BackendBackendBaseController
         $request->request->add(['created_by'=>auth()->user()->id]);
         //store
         try{
-           $tag=$this->module->create($request->all());
+           $tag=$this->model->create($request->all());
            if($tag){
                $request->session()->flash('success','Tag added successfuly');
            }else{
@@ -92,8 +92,8 @@ class TagController extends BackendBackendBaseController
     function edit($id)
     {
         try{
-            $userid = Tag::all();
-            $data = $this->module->find($id);
+            $userid = $this->model->all();
+            $data = $this->model->find($id);
             if(!$data){
                 request()->session()->flash('error','Error: Invalid Request');
                 return redirect()->route($this->__loadDataToView($this->base_route.'index'));
@@ -115,7 +115,7 @@ class TagController extends BackendBackendBaseController
     public function update(Request $request, $id)
     {
         try{
-            $data = $this->module->find($id);
+            $data = $this->model->find($id);
             if(!$data)
             {
                 request()->session()->flash('error','Error: Invalid Request');
@@ -141,7 +141,7 @@ class TagController extends BackendBackendBaseController
      */
     public function destroy($id)
     {
-        $data['record']=$this->module->find($id);
+        $data['record']=$this->model->find($id);
         if(!$data['record' ]){
             request()->session()->flash('error',"Error:Invalid Request");
             return redirect()->route($this->__loadDataToView($this->base_route.'index'));
@@ -159,7 +159,7 @@ class TagController extends BackendBackendBaseController
     }
     public function trash()
     {
-        $data['records'] = $this->module->onlyTrashed()->get();
+        $data['records'] = $this->model->onlyTrashed()->get();
         return view($this->__loadDataToView($this->base_view.'trash'), compact('data'));
 
 
@@ -167,7 +167,7 @@ class TagController extends BackendBackendBaseController
     public function restore(Request $request, $id)
     {
         try {
-            $data['record'] = $this->module->onlyTrashed()->where('id', $id)->first();
+            $data['record'] = $this->model->onlyTrashed()->where('id', $id)->first();
             if (!$data['record']) {
                 $data['record']->restore();
                 request()->session()->flash('error', "Error:Invalid Request");

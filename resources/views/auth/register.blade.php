@@ -17,7 +17,7 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="{{url('/')}}"><b>Admin</b>LTE</a>
     </div>
 
     <div class="card">
@@ -91,15 +91,16 @@
                                 </button>
                             </div>
                         </div>
-
-
+                    </div>
+                </div>
 
             </form>
 
 
 
-            <a href="login" class="text-center">I already have a membership</a>
+            <a href="{{url('/login')}}" class="text-center">I already have a membership</a>
         </div>
+    </div>
         <!-- /.form-box -->
     </div><!-- /.card -->
 </div>

@@ -60,8 +60,6 @@
                     </div>
 
                     {{--<input type="hidden" value="{{auth()->user()->id}}" name="created_by">--}}
-
-
                 </div>
                 <div class="card-footer">
                     <input type="submit" class="btn btn-primary">

@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title',$module.'Tags')
+@section('title',$module)
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -54,12 +54,11 @@
                   <th>S.No</th>
                   <th>Id</th>
                   <th>Tag Name</th>
-                  <th>Status</th>
                   <th>Slug</th>
+                  <th>Status</th>
                   <th>Created By</th>
                   <th>Updated By</th>
                   <th>Created Date</th>
-                  <th>Updated Date</th>
                   <th>Action</th>
 
               </tr>
@@ -69,10 +68,11 @@
                       <td>{{ $n++ }}</td>
                       <td>{{$record->id}}</td>
                       <td>{{$record->title}}</td>
+                      <td>{{$record->slug}}</td>
                       <td>
                          @include('backend.include.status',['status'=>$record->status])
                       </td>
-                      <td>{{$record->slug}}</td>
+
                       <td>{{$record->createdBy->name}}</td>
 
                       <td>
@@ -81,7 +81,7 @@
                           @endif
                       </td>
                       <td>{{$record->created_at}}</td>
-                      <td>{{$record->updated_at}}</td>
+
                       <td>
                           <a href="{{route($base_route.'edit',$record->id)}}" class="btn btn-warning">Edit</a>
                       </td>

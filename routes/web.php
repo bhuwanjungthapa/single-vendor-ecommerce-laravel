@@ -36,13 +36,18 @@ Route::prefix('backend/tag/')->name('backend.tag.')->group(function (){
 
 
 //Attribute
-Route::get('attribute/create',[\App\Http\Controllers\Backend\AtttributeController::class,'create'])->name('attribute.create');
-Route::post('attribute/store',[\App\Http\Controllers\Backend\AtttributeController::class,'store'])->name('attribute.store');
-Route::get('attribute',[\App\Http\Controllers\Backend\AtttributeController::class,'index'])->name('attribute.index');
-Route:: get('attribute/{id}/show',[\App\Http\Controllers\Backend\AtttributeController::class,'show'])->name('attribute.show');
-Route::get('attribute/{id}/edit',[\App\Http\Controllers\Backend\AtttributeController::class,'edit'])->name('attribute.edit');
-Route::put('attribute/{id}',[\App\Http\Controllers\Backend\AtttributeController::class,'update'])->name('attribute.update');
-Route::delete('attribute/{id}',[\App\Http\Controllers\Backend\AtttributeController::class,'destroy'])->name('attribute.destroy');
+Route::prefix('backend/attribute/')->name('backend.attribute.')->group(function(){
+    Route:: get('trash',[\App\Http\Controllers\Backend\AtttributeController::class,'trash'])->name('trash');
+    Route:: post('restore/{id} ',[\App\Http\Controllers\Backend\AtttributeController::class,'restore'])->name('restore');
+    Route:: delete ('force_delete/{id}',[\App\Http\Controllers\Backend\AtttributeController::class,'permanentDelete'])->name('force_delete');
+    Route::get('create',[\App\Http\Controllers\Backend\AtttributeController::class,'create'])->name('create');
+    Route:: post('store',[\App\Http\Controllers\Backend\AtttributeController::class,'store'])->name('store');
+    Route::get('',[\App\Http\Controllers\Backend\AtttributeController::class,'index'])->name('index');
+    Route:: get('{id}',[\App\Http\Controllers\backend\AtttributeController::class,'show'])->name('show');
+    Route:: delete('{id}',[\App\Http\Controllers\backend\AtttributeController::class,'destroy'])->name('destroy');
+    Route:: get('{id}/edit',[\App\Http\Controllers\backend\AtttributeController::class,'edit'])->name('edit');
+    Route:: put('{id}',[\App\Http\Controllers\backend\AtttributeController::class,'update'])->name('update');
+});
 
 //Brand
 Route::get('brand/create',[\App\Http\Controllers\Backend\BrandController::class,'create'])->name('brand.create');
