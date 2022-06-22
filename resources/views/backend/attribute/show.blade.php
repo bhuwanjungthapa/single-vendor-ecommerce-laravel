@@ -42,7 +42,7 @@
 
                     <tr>
                         <th>Title</th>
-                        <td>{{$attribute->title}}</td>
+                        <td>{{$data['records']->title}}</td>
                     </tr>
 
                     {{-- <tr>
@@ -51,28 +51,29 @@
                     </tr> --}}
                     <tr>
                         <th>Status</th>
-                        <td>{{$attribute->status}}</td>
+                        <td>
+                            @include('backend.include.status',['status'=>$data['records']->status])
+                        </td>
                     </tr>
                     <tr>
                         <th>Created By</th>
-                        <td>{{DB::table('users')->where('id', $attribute->created_by)->value('name')}}</td>
+                        <td>{{$data['records']->createdBy->name}}</td>
                     </tr>
 
                     <tr>
                         <th>Updated By</th>
-                        <td>{{DB::table('users')->where('id', $attribute->updated_by)->value('name')}}</td>
+                        <td>
+                            @if(!empty($data['records']->updated_by))
+                                {{$data['records']->updatedBy->name}}
+                            @endif
+                        </td>
                     </tr>
 
 
 
                     <tr>
                         <th>Created At</th>
-                        <td>{{$attribute->created_at}}</td>
-
-
-
-
-
+                        <td>{{$data['records']->created_at}}</td>
                     </tr>
 
                     </thead>

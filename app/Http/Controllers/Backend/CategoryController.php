@@ -6,8 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\Category;
 
-class CategoryController extends Controller
+class CategoryController extends BackendBackendBaseController
 {
+    protected $base_route = 'backend.category.';
+    protected $base_view = 'backend.category.';
+    protected $module = 'Category';
+
+    public function __construct()
+    {
+        $this->model = new Category();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,10 +24,8 @@ class CategoryController extends Controller
     public function index()
     {
 
-        $data = Category::all();
-        return view('backend.category.index', compact('data'));
-
-
+        $data['records'] = $this->model->all();
+        return view($this->__loadDataToView($this->base_view.'index'), compact('data'));
     }
 
     /**
@@ -29,7 +35,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.category.create');
+        //calling create view
+
+        return view($this->__loadDataToView($this->base_view.'create'));
     }
 
     /**
@@ -40,9 +48,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title'=>'required'
+        ]);
+        $request->request->add(['created_by'=>auth()->user()->id]);
+        //store
         try{
-            $category=Category::create($request->all());
-            if($category){
+            $tag=$this->model->create($request->all());
+            if($tag){
                 $request->session()->flash('success','Category added successfuly');
             }else{
                 $request->session()->flash('error','Category addition failed');
@@ -51,9 +64,8 @@ class CategoryController extends Controller
         catch (\Exception $exception){
             $request->session()->flash('error','Error'.$exception->getMessage());
         }
-        return redirect()->route('category.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
-
 
     /**
      * Display the specified resource.
@@ -61,10 +73,20 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /*public function show($id)
+    {
+       $data['records'] = $this->model->find($id);
+        if(!$data['records']){
+            request()->session()->flash('error',"Error:Invalid Request");
+            return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+
+        }
+        return view($this->__loadDataToView($this->base_view.'show'),compact('data'));
+    }*/
     public function show($id)
     {
-        $category = Category::find($id);
-        return view('backend.category.show',compact('category'));
+        $data = $this->model->find($id);
+        return view($this->__loadDataToView($this->base_view.'show'),compact('data'));
     }
 
     /**
@@ -73,22 +95,22 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    function edit($id)
     {
-        try
-        {
-            $category = Category::find($id);
-            if(!$category)
-            {
-                request()->session()->flash('error','Error:Invalid Request');
-                return redirect()->route('category.index');
+
+        try{
+            $userid = $this->model->all();
+            $data['records'] = $this->model->find($id);
+            if(!$data){
+                request()->session()->flash('error','Error: Invalid Request');
+                request()->request->add(['updated_by'=>auth()->user()->id]);
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+
             }
-        }
-        catch(Exception $exception)
-        {
+        }catch(\Exception $exception){
             request()->session()->flash('error','Error:'.$exception->getMessage());
         }
-        return view('backend.category.edit',compact('category'));
+        return view($this->__loadDataToView($this->base_view.'edit'), compact('data','userid'));
     }
 
     /**
@@ -100,29 +122,22 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try
-        {
-            $category = Category::find($id);
-            if(!$category)
+        try{
+            $data = $this->model->find($id);
+            if(!$data)
             {
-                request()->session()->flash('error','Error:Invalid Request');
-                return redirect()->route('category.index');
+                request()->session()->flash('error','Error: Invalid Request');
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
-            if($category->update($request->all()))
-            {
-                request()->session()->flash('success','Updated');
-
-            }else
-            {
-                request()->session()->flash('error','Updated failed');
+            if ($data->update($request->all())){
+                $request->session()->flash('success','Category Updated Successfully!!');
+            }else{
+                $request->session()->flash('error','Category Update Failed!!');
             }
-
+        }catch(\Exception $exception){
+            $request->session()->flash('error','Error: ' . $exception->getMessage());
         }
-        catch(Exception $exception)
-        {
-            request()->session()->flash('error','Error:'.$exception->getMessage());
-        }
-        return redirect()->route('category.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
 
 
@@ -134,23 +149,69 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        try
-        {
-            $category = Category::find($id);
-            if($category->delete())
-            {
-                request()->session()->flash('success','category Deleted Successfully!!');
-            }
-            else
-            {
-                request()->session()->flash('error','category Deleted Failed');
-            }
+        $data['record']=$this->model->find($id);
+        if(!$data['record' ]){
+            request()->session()->flash('error',"Error:Invalid Request");
+            return redirect()->route($this->__loadDataToView($this->base_route.'index'));
 
         }
-        catch(Exception $exception)
+        if($data["record"]->delete())
         {
-            request()->session()->flash('error','Error:'.$exception->getMessage());
+            request()->session()->flash('success',"Successfully Deleted");
+
+        }else{
+            request()->session()->flash('error',"Error:Delete Failed ");
+
         }
-        return redirect()->route('category.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+    }
+    public function trash()
+    {
+        $data['records'] = $this->model->onlyTrashed()->get();
+        return view($this->__loadDataToView($this->base_view.'trash'), compact('data'));
+
+
+    }
+    public function restore(Request $request, $id)
+    {
+        try {
+            $data['record'] = $this->model->onlyTrashed()->where('id', $id)->first();
+            if (!$data['record']) {
+                $data['record']->restore();
+                request()->session()->flash('error', "Error:Invalid Request");
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+            }
+            /*$request->request->add(['updated_by'=>auth()->user()->id]);
+            $record=$data['record']->update($request->all());*/
+            if ($data['record']){
+                $data['record']->restore();
+                request()->session()->flash('success', "Category Restored");
+            }else{
+                request()->session()->flash('error',"Category Restore  Failed ");
+            }
+        }
+        catch(\Exception $exception){
+            request()->session()->flash('error',"Error:".$exception->getMessage());
+
+        }
+
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+    }
+    public function permanentDelete($id)
+    {
+        $data['record']=$this->model->onlyTrashed()->where('id',$id)->first();
+        if(!$data['record']){
+            request()->session()->flash('error',"Error:Invalid Request");
+            return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+        }
+        if($data["record"]->forceDelete())
+        {
+            request()->session()->flash('success',"Successfully Deleted");
+
+        }else{
+            request()->session()->flash('error',"Error:Delete Failed ");
+
+        }
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
 }

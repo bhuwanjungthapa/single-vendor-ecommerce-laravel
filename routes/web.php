@@ -59,13 +59,18 @@ Route::put('brand/{id}',[\App\Http\Controllers\Backend\BrandController::class,'u
 Route::delete('brand/{id}',[\App\Http\Controllers\Backend\BrandController::class,'destroy'])->name('brand.destroy');
 
 //Category
-Route::get('category/create',[\App\Http\Controllers\Backend\CategoryController::class,'create'])->name('category.create');
-Route::post('category/store',[\App\Http\Controllers\Backend\CategoryController::class,'store'])->name('category.store');
-Route::get('category',[\App\Http\Controllers\Backend\CategoryController::class,'index'])->name('category.index');
-Route::post('category/{id}/show',[\App\Http\Controllers\Backend\CategoryController::class,'show'])->name('category.show');
-Route::get('category/{id}/edit',[\App\Http\Controllers\Backend\CategoryController::class,'edit'])->name('category.edit');
-Route::put('category/{id}',[\App\Http\Controllers\Backend\CategoryController::class,'update'])->name('category.update');
-Route::delete('category/{id}',[\App\Http\Controllers\Backend\CategoryController::class,'destroy'])->name('category.destroy');
+Route::prefix('backend/category/')->name('backend.category.')->group(function (){
+    Route:: get('trash', [\App\Http\Controllers\Backend\CategoryController::class, 'trash'])->name('trash');
+    Route:: post('restore/{id}', [\App\Http\Controllers\Backend\CategoryController::class, 'restore'])->name('restore');
+    Route:: delete('force_delete/{id}', [\App\Http\Controllers\Backend\CategoryController::class, 'permanentDelete'])->name('force_delete');
+    Route::get('create', [\App\Http\Controllers\Backend\CategoryController::class, 'create'])->name('create');
+    Route::post('store', [\App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('store');
+    Route::get('', [\App\Http\Controllers\Backend\CategoryController::class, 'index'])->name('index');
+    Route:: get('{id}',[\App\Http\Controllers\backend\CategoryController::class,'show'])->name('show');
+    Route::get('{id}/edit', [\App\Http\Controllers\Backend\CategoryController::class, 'edit'])->name('edit');
+    Route::put('{id}', [\App\Http\Controllers\Backend\CategoryController::class, 'update'])->name('update');
+    Route::delete('{id}', [\App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('destroy');
+});
 
 //Products
 Route::get('product/create',[\App\Http\Controllers\Backend\ProductController::class,'create'])->name('product.create');

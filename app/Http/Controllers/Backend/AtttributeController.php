@@ -73,8 +73,8 @@ class AtttributeController extends BackendBackendBaseController
      */
     public function show($id)
     {
-        $attribute = $this->model->find($id);
-        return view($this->__loadDataToView($this->base_view.'show'),compact('attribute'));
+        $data['records'] = $this->model->find($id);
+        return view($this->__loadDataToView($this->base_view.'show'),compact('data'));
     }
 
     /**

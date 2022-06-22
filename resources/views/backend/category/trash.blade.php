@@ -26,7 +26,6 @@
                 <h3 class="card-title">List {{$module}}
                     <a href="{{route($base_route.'create')}}" class="btn btn-info">Create</a>
                     <a href="{{route($base_route.'index')}}" class="btn btn-info">List</a>
-
                 </h3>
 
                 <div class="card-tools">
@@ -39,52 +38,63 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-sm">
+                @if(session('success'))
+                    <p style="background: green; padding:10px">{{session('success')}}</p>
+
+                @endif
+                @if(session('error'))
+                    <p style="background: red">{{session('error')}}</p>
+                @endif
+                <table class="table table-bordered">
                     <thead>
                     <tr>
+
                         <th>ID</th>
                         <th>Title</th>
-                        {{-- <th>Slug</th> --}}
+                        <th>Slug</th>
+                        <th>Rank</th>
                         <th>Status</th>
                         <th>Created By</th>
                         <th>Updated By</th>
                         <th>Created At</th>
                         <th>Action</th>
                     </tr>
-
                     </thead>
                     <tbody>
-                    <?php $n=1 ?> @foreach($data['records'] as $record)
+                    <?php $n=1 ?>
+                    @foreach($data['records'] as $record)
 
                         <tr>
                             <td>{{$n++}}</td>
                             <td>{{$record->title}}</td>
-
+                            <td>{{$record->slug}}</td>
+                            <td>{{$record->rank}}</td>
                             <td>
                                 @include('backend.include.status',['status'=>$record->status])
                             </td>
                             <td>{{$record->createdBy->name}}</td>
                             <td>
-                                @if(!empty($d->updated_by))
-                                <td>{{$record->updatedBy->name}}</td>
+                                @if(!empty($record->updated_by))
+                                    {{$record->updatedBy->name}}
                                 @endif
                             </td>
                             <td>{{$record->created_at}}</td>
-                                <th>
-                                    <form action="{{route($base_route.'restore',$record->id)}}" method="post" style="display:inline-block">
-                                        @csrf
-                                        <input type="submit" class="btn btn-primary" value="Restore">
-                                    </form>
-                                    <form action="{{route($base_route.'force_delete',$record->id)}}" method="post" style="display:inline-block">
-                                        @method("delete")
-                                        @csrf
-                                        <input type="submit" class="btn btn-danger" value="Delete">
-                                    </form>
-                                </th>
-                            </td>
+                            <th>
+                                <form action="{{route($base_route.'restore',$record->id)}}" method="post" style="display:inline-block">
+                                    @csrf
+                                    <input type="submit" class="btn btn-primary" value="Restore">
+                                </form>
+                                <form action="{{route($base_route.'force_delete',$record->id)}}" method="post" style="display:inline-block">
+                                    @method("delete")
+                                    @csrf
+                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                </form>
+
                             </th>
+
                         </tr>
                     @endforeach
+
                     </tbody>
                 </table>
             </div>

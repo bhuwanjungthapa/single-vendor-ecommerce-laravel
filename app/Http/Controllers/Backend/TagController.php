@@ -191,11 +191,11 @@ class TagController extends BackendBackendBaseController
     }
     public function permanentDelete($id)
     {
-        $data['record']=$this->module->onlyTrashed()->where('id',$id)->first();
+        $data['record'] = $this->model->onlyTrashed()->where('id', $id)->first();
+
         if(!$data['record' ]){
             request()->session()->flash('error',"Error:Invalid Request");
             return redirect()->route($this->__loadDataToView($this->base_route.'index'));
-
         }
         if($data["record"]->forceDelete())
         {
