@@ -15,7 +15,7 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-        $brands = ['Apple','Samsung','Oneplus','Google','Nike','Adidas'];
+        $brands = ['lamborghini','Bugatti','Ferrari','Tesla','Range Rover','BMW'];
         for($i=0;$i < count($brands);$i++){
             DB::table('brands')->insert([
                 'created_by'=>1,

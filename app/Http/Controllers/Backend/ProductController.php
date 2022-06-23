@@ -10,6 +10,14 @@ use App\Models\Backend\Subcategory;
 
 class ProductController extends Controller
 {
+    protected $base_route = 'backend.product.';
+    protected $base_view = 'backend.product.';
+    protected $module = 'product';
+
+    public function __construct()
+    {
+        $this->model = new Product();
+    }
     /**
      * Display a listing of the resource.
      *

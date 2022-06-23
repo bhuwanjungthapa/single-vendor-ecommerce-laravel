@@ -15,10 +15,10 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $tag = ['trend','hot','new','man','women'];
+        $tag = ['trend','hot','new'];
         for($i = 0;$i < count($tag);$i++){
             DB::table('tags')->insert([
-                'created_by' =>2,
+                'created_by' =>1,
                 'title' => $tag[$i],
                 'slug' => strtolower($tag[$i])
             ]);

@@ -16,7 +16,7 @@ class CatSeeder extends Seeder
      */
     public function run()
     {
-        $category = ['men','women','child'];
+        $category = ['Normal','Delux','Super Delux'];
         for($i=0;$i<count($category);$i++){
             DB::table('categories')->insert([
                 'created_by'=>1,

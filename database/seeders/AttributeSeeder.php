@@ -16,7 +16,7 @@ class AttributeSeeder extends Seeder
     public function run()
     {
         DB::table('attributes')->insert([
-            'created_by' => 2,
+            'created_by' => 1,
             'title' => 'color'
         ]);
 

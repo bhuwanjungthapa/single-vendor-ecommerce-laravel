@@ -23,4 +23,12 @@ class Product extends Model
     {
         return $this->belongsTo(User::class,'updated_by','id');
     }
+    function category()
+    {
+        return $this->belongsTo(Category::class,'category_id','id');
+    }
+    function subcategory()
+    {
+        return $this->belongsTo(Subcategory::class,'subcategory_id','id');
+    }
 }

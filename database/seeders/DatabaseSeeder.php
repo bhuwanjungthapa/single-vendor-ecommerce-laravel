@@ -19,8 +19,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BrandSeeder::class,
             CatSeeder::class,
+            SubcategorySeeder::class,
             AttributeSeeder::class,
-            TagSeeder::class
+            TagSeeder::class,
+            ProductSeeder::class
         ]);
 
         // \App\Models\User::factory(10)->create();

@@ -22,8 +22,8 @@ return new class extends Migration
             $table->foreign('updated_by')->references('id')->on('users');
             $table->unsignedBigInteger('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->unsignedBigInteger('sub_category_id')->unsigned();
-            $table->foreign('sub_category_id')->references('id')->on('subcategories')->onDelete('cascade');
+            $table->unsignedBigInteger('subcategory_id')->unsigned();
+            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('specification')->nullable();
