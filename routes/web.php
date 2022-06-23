@@ -82,10 +82,15 @@ Route::put('product/{id}',[\App\Http\Controllers\Backend\ProductController::clas
 Route::delete('product/{id}',[\App\Http\Controllers\Backend\ProductController::class,'destroy'])->name('product.destroy');
 
 //sub_category
-Route::get('subcategories/create',[\App\Http\Controllers\Backend\SubcategoryController::class,'create'])->name('subcategories.create');
-Route::post('subcategories/store',[\App\Http\Controllers\Backend\SubcategoryController::class,'store'])->name('subcategories.store');
-Route::get('subcategories',[\App\Http\Controllers\Backend\SubcategoryController::class,'index'])->name('subcategories.index');
-Route::post('subcategories/{id}/show',[\App\Http\Controllers\Backend\SubcategoryController::class,'store'])->name('subcategories.show');
-Route::get('subcategories/{id}/edit',[\App\Http\Controllers\Backend\SubcategoryController::class,'edit'])->name('subcategories.edit');
-Route::put('subcategories/{id}',[\App\Http\Controllers\Backend\SubcategoryController::class,'update'])->name('subcategories.update');
-Route::delete('subcategories/{id}',[\App\Http\Controllers\Backend\SubcategoryController::class,'destroy'])->name('subcategories.destroy');
+Route::prefix('backend/subcategories/')->name('backend.subcategories.')->group(function (){
+    Route:: get('trash', [\App\Http\Controllers\Backend\SubcategoryController::class, 'trash'])->name('trash');
+    Route:: post('restore/{id}', [\App\Http\Controllers\Backend\SubcategoryController::class, 'restore'])->name('restore');
+    Route:: delete('force_delete/{id}', [\App\Http\Controllers\Backend\SubcategoryController::class, 'permanentDelete'])->name('force_delete');
+    Route::get('create', [\App\Http\Controllers\Backend\SubcategoryController::class, 'create'])->name('create');
+    Route::post('store', [\App\Http\Controllers\Backend\SubcategoryController::class, 'store'])->name('store');
+    Route::get('', [\App\Http\Controllers\Backend\SubcategoryController::class, 'index'])->name('index');
+    Route:: get('{id}',[\App\Http\Controllers\backend\SubcategoryController::class,'show'])->name('show');
+    Route::get('{id}/edit', [\App\Http\Controllers\Backend\SubcategoryController::class, 'edit'])->name('edit');
+    Route::put('{id}', [\App\Http\Controllers\Backend\SubcategoryController::class, 'update'])->name('update');
+    Route::delete('{id}', [\App\Http\Controllers\Backend\SubcategoryController::class, 'destroy'])->name('destroy');
+});

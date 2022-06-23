@@ -29,14 +29,17 @@
                         <input type="text" class="form-control" name="slug" value="{{$data->slug}}">
                     </div>
                 </div>
-                <div class="form-group row">
-                        <label for="status" class="col-sm-2 col-form-label">Status</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" name="status" value="{{$data->status}}">
-                    </div>
+                <div class="form-group">
+                    <label for="active">Status</label><br>
+                    @if($data['records']->status==1)
+                        <input type="radio" name="status" id="active" value="1" checked> Enable<br>
+                        <input type="radio" name="status" d="active" value="0"> Disable<br>
+                    @else
+                        <input type="radio" name="status" id="active" value="1"> Enable<br>
+                        <input type="radio" name="status" d="active" value="0" checked> Disable<br>
+                    @endif
                 </div>
 
-                <input type="hidden" value="{{auth()->user()->id}}" name="updated_by">
 
                 <div class="form-group row">
                     <div class="col-sm-10">

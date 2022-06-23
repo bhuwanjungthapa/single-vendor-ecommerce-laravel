@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\Product;
 use App\Models\Backend\Category;
-use App\Models\Backend\SubCategory;
+use App\Models\Backend\Subcategory;
 
 class ProductController extends Controller
 {
@@ -32,7 +32,7 @@ class ProductController extends Controller
     public function create()
     {
         $data1['categories'] = Category::all();
-        $data2['subcategories'] = SubCategory::all();
+        $data2['subcategories'] = Subcategory::all();
         return view('backend.product.create',compact('data1','data2'));
     }
 

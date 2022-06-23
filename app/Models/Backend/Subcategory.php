@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\User;
 
-class SubCategory extends Model
+class Subcategory extends Model
 {
     use HasFactory;
     use SoftDeletes;
