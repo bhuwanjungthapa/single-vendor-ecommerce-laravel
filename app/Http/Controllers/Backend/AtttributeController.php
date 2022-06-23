@@ -51,6 +51,7 @@ class AtttributeController extends BackendBackendBaseController
             'title'=>'required'
         ]);
         try{
+            $request->request->add(['created_by'=>auth()->user()->id]);
             $attribute=$this->model->create($request->all());
             if($attribute){
                 $request->session()->flash('success','Attribute added successfuly');
@@ -112,6 +113,7 @@ class AtttributeController extends BackendBackendBaseController
     {
         try{
             $data = $this->model->find($id);
+            request()->request->add(['updated_by'=>auth()->user()->id]);
             if(!$data)
             {
                 request()->session()->flash('error','Error: Invalid Request');

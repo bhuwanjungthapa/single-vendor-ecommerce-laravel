@@ -23,7 +23,9 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{$module}}</h3>
+            <h3 class="card-title">{{$module}}
+            <a href="{{route($base_route.'index')}}" class="btn btn-info"> GotoList</a>
+            </h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -38,52 +40,60 @@
         <input type="hidden" name="_method" value="PUT">
             @csrf
             <div class="card-body">
-
+                {!!Form::model($data['records'],['route' => [$base_route.'store'],'method'=>'post'])!!}
                 <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" name="title" class="form-control" id="title" value="{{$data['records']->title}}" placeholder="Enter Title">
+                    {!!Form::label('category_id','Category')!!}
+                    {!!Form::select ('category_id',$data['records'],null,['class'=> 'form-control'])!!}
                 </div>
 
                 <div class="form-group">
-                    <label for="status">Slug</label>
-                    <input type="text" name="slug" class="form-control" id="slug" value="{{$data['records']->slug}}" placeholder="Status">
+                    {!!Form::label('title','Title')!!}
+                    {!!Form::text ('title',null,['class'=> 'form-control','placeholder'=>'Title'])!!}
+                    @error('title')
+                    <span class="text-danger">{{$message}}</span> @enderror
                 </div>
                 <div class="form-group">
-                    <label for="rank">Rank</label>
-                    <input type="number" name="rank" class="form-control" id="rank" value="{{$data['records']->rank}}" placeholder="Rank">
+                    {!!Form::label('slug','Slug')!!}
+                    {!!Form::text ('slug',null,['class'=> 'form-control','placeholder'=>'Slug'])!!}
+                    @error('slug')
+                    <span class="text-danger">{{$message}}</span> @enderror
                 </div>
                 <div class="form-group">
-                    <label for="Image">Image</label></br>
-                    <input type="file" name="image" class="" value="{{$data['records']->image}}" id="image">
+                    {!!Form::label('rank','Rank')!!}
+                    {!!Form::number('rank',null,['class'=> 'form-control','placeholder'=>'Rank'])!!}
+                    @error('rank')
+                    <span class="text-danger">{{$message}}</span> @enderror
                 </div>
                 <div class="form-group">
-                    <label for="meta_title">Meta Title</label>
-                    <input type="text" name="meta_title" class="form-control" id="meta_title" value="{{$data['records']->meta_title}}" placeholder="Meta Title">
-                </div>
-                <div class="form-group">
-                    <label for="meta_keyword">Meta Keyword</label>
-                    <input type="text" name="meta_keyword" class="form-control" id="meta_keyword" value="{{$data['records']->meta_keyword}}" placeholder="Meta Keyword">
-                </div>
-                <div class="form-group">
-                    <label for="meta_description">Meta Description</label><br>
-                    <textarea name="meta_description" cols="40" rows="5"  value="{{$data['records']->meta_description}}" placeholder="Meta Description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="active">Status</label><br>
-                    @if($data['records']->status==1)
-                        <input type="radio" name="status" id="active" value="1" checked> Enable<br>
-                        <input type="radio" name="status" d="active" value="0"> Disable<br>
-                    @else
-                        <input type="radio" name="status" id="active" value="1"> Enable<br>
-                        <input type="radio" name="status" d="active" value="0" checked> Disable<br>
-                    @endif
-                </div>
+                    {!!Form::label('image','Image')!!}
+                    {!!Form::file('image',null,['class'=> 'form-control','placeholder'=>'Image'])!!}
 
+                </div>
+                <div class="form-group">
+                    {!!Form::label('meta_title','Meta Title')!!}
+                    {!!Form::text('meta_title',null,['class'=> 'form-control','placeholder'=>'Meta Title'])!!}
+                </div>
+                <div class="form-group">
+                    {!!Form::label('meta_keyword','Meta Keyword')!!}
+                    {!!Form::text('meta_keyword',null,['class'=> 'form-control','placeholder'=>'Meta Keyword'])!!}
+                </div>
+                <div class="form-group">
+                    {!!Form::label('meta_description','Meta Description')!!}
+                    {!!Form::textarea('meta_description',null,['class'=> 'form-control','placeholder'=>'Meta Description'])!!}
+
+                    <br>
+                </div>
+                <div class="form-group">
+                    {!!Form::label('status','Status')!!} <br>
+                    <input type="radio" name="status" value="1"> Enable<br>
+                    <input type="radio" name="status" value="2" checked> Disable<br>
+                </div>
+                <div>
+                    {!!Form::submit('Save' .''.$module,['class'=>'btn btn-success'])!!}
+                    {!!Form::reset('Clear'.''.$module,['class'=>'btn btn-danger'])!!}
+                </div>
+                {{Form::close()}}
             </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
 
         <!-- /.card-body -->
         <div class="card-footer">

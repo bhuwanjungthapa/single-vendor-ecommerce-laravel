@@ -14,19 +14,19 @@
 
     <section class="content">
         <div class="form-group">
-            <form action="{{route($base_route.'update',$data->id)}}" method="post">
+            <form action="{{route($base_route.'update',$data['records']->id)}}" method="post">
                 <input type="hidden" name="_method" value="PUT">
                 @csrf
                 <div class="form-group row">
                     <label for="title" class="col-sm-2 col-form-label">Title</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="title" value="{{$data->title}}">
+                        <input type="text" class="form-control" name="title" value="{{$data['records']->title}}">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="slug" class="col-sm-2 col-form-label">Slug</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="slug" value="{{$data->slug}}">
+                        <input type="text" class="form-control" name="slug" value="{{$data['records']->slug}}">
                     </div>
                 </div>
                 <div class="form-group">

@@ -51,9 +51,10 @@ class CategoryController extends BackendBackendBaseController
         $request->validate([
             'title'=>'required'
         ]);
-        $request->request->add(['created_by'=>auth()->user()->id]);
+
         //store
         try{
+            $request->request->add(['created_by'=>auth()->user()->id]);
             $tag=$this->model->create($request->all());
             if($tag){
                 $request->session()->flash('success','Category added successfuly');
@@ -103,7 +104,7 @@ class CategoryController extends BackendBackendBaseController
             $data['records'] = $this->model->find($id);
             if(!$data){
                 request()->session()->flash('error','Error: Invalid Request');
-                request()->request->add(['updated_by'=>auth()->user()->id]);
+
                 return redirect()->route($this->__loadDataToView($this->base_route.'index'));
 
             }
@@ -124,6 +125,7 @@ class CategoryController extends BackendBackendBaseController
     {
         try{
             $data = $this->model->find($id);
+            request()->request->add(['updated_by'=>auth()->user()->id]);
             if(!$data)
             {
                 request()->session()->flash('error','Error: Invalid Request');

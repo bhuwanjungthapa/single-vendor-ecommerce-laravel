@@ -89,21 +89,22 @@ class TagController extends BackendBackendBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    function edit($id)
+    public function edit($id)
     {
-        try{
-            $userid = $this->model->all();
-            $data = $this->model->find($id);
-            if(!$data){
-                request()->session()->flash('error','Error: Invalid Request');
-                request()->request->add(['updated_by'=>auth()->user()->id]);
+        try
+        {
+            $data['records'] = $this->model->find($id);
+            if(!$data['records'])
+            {
+                request()->session()->flash('error','Error:Invalid Request');
                 return redirect()->route($this->__loadDataToView($this->base_route.'index'));
-
             }
-        }catch(\Exception $exception){
+        }
+        catch(Exception $exception)
+        {
             request()->session()->flash('error','Error:'.$exception->getMessage());
         }
-        return view($this->__loadDataToView($this->base_view.'edit'), compact('data','userid'));
+        return view($this->__loadDataToView($this->base_view.'edit'),compact('data'));
     }
 
     /**
@@ -117,6 +118,7 @@ class TagController extends BackendBackendBaseController
     {
         try{
             $data = $this->model->find($id);
+            request()->request->add(['updated_by'=>auth()->user()->id]);
             if(!$data)
             {
                 request()->session()->flash('error','Error: Invalid Request');

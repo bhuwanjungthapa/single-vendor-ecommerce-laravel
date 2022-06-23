@@ -38,7 +38,8 @@ class SubcategoryController extends BackendBackendBaseController
      */
     public function create()
     {
-        return view($this->__loadDataToView($this->base_view.'create'));
+        $data['categories']= Category::pluck('title','id');
+        return view($this->__loadDataToView($this->base_view .'create') ,compact('data'));
     }
 
     /**
@@ -53,11 +54,12 @@ class SubcategoryController extends BackendBackendBaseController
             'title'=>'required'
         ]);
         try{
+            $request->request->add(['created_by'=>auth()->user()->id]);
             $attribute=$this->model->create($request->all());
             if($attribute){
-                $request->session()->flash('success','Attribute added successfuly');
+                $request->session()->flash('success','Subcategories added successfuly');
             }else{
-                $request->session()->flash('error','Attribute addition failed');
+                $request->session()->flash('error','Subcategories addition failed');
             }
         }
         catch (\Exception $exception){
@@ -75,7 +77,7 @@ class SubcategoryController extends BackendBackendBaseController
      */
     public function show($id)
     {
-        $data['records'] = $this->model->find($id);
+        $data = $this->model->find($id);
         return view($this->__loadDataToView($this->base_view.'show'),compact('data'));
     }
 
@@ -93,7 +95,6 @@ class SubcategoryController extends BackendBackendBaseController
             if(!$data['records'])
             {
                 request()->session()->flash('error','Error:Invalid Request');
-                request()->request->add(['updated_by'=>auth()->user()->id]);
                 return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
         }
@@ -115,15 +116,16 @@ class SubcategoryController extends BackendBackendBaseController
     {
         try{
             $data = $this->model->find($id);
+            request()->request->add(['updated_by'=>auth()->user()->id]);
             if(!$data)
             {
                 request()->session()->flash('error','Error: Invalid Request');
                 return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
             if ($data->update($request->all())){
-                $request->session()->flash('success','Tag Updated Successfully!!');
+                $request->session()->flash('success',' Subcategory Updated Successfully!!');
             }else{
-                $request->session()->flash('error','Tag Update Failed!!');
+                $request->session()->flash('error','Subcategory Update Failed!!');
             }
         }catch(\Exception $exception){
             $request->session()->flash('error','Error: ' . $exception->getMessage());
@@ -176,9 +178,9 @@ class SubcategoryController extends BackendBackendBaseController
             $record=$data['record']->update($request->all());*/
             if ($data['record']){
                 $data['record']->restore();
-                request()->session()->flash('success', "Tag Restored");
+                request()->session()->flash('success', "Subcategory Restored");
             }else{
-                request()->session()->flash('error',"Tag Restore  Failed ");
+                request()->session()->flash('error',"Subcategory Restore  Failed ");
             }
         }
         catch(\Exception $exception){

@@ -12,8 +12,8 @@ class Subcategory extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'subcategories';
-    protected $fillable = ['category_id','title','status','slug','created_by','updated_by','rank','image','meta-title','meta-keyword','meta-description'];
-    protected $filltable = ['category_id','title','status','slug','created_by','updated_by','rank','image','meta-title','meta-keyword','meta-description'];
+    protected $fillable = ['category_id','title','status','slug','created_by','updated_by','rank','image','meta_title','meta_keyword','meta_description'];
+    protected $filltable = ['category_id','title','status','slug','created_by','updated_by','rank','image','meta_title','meta_keyword','meta-description'];
 
     function createdBy()
     {
@@ -22,5 +22,9 @@ class Subcategory extends Model
     function updatedBy()
     {
         return $this->belongsTo(User::class,'updated_by','id');
+    }
+    function category()
+    {
+        return $this->belongsTo(Category::class,'category_id','id');
     }
 }

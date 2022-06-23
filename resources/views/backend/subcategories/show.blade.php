@@ -41,56 +41,58 @@
 
                     <tr>
                         <th>Title</th>
-                        <td>{{$subcategory->title}}</td>
+                        <td>{{$data->title}}</td>
                     </tr>
 
                     <tr>
                         <th>Slug</th>
-                        <td>{{$subcategory->slug}}</td>
+                        <td>{{$data->slug}}</td>
+                    </tr>
+                    <tr>
+                        <th>Category</th>
+                        <td>{{$data->category->title}}</td>
                     </tr>
                     <tr>
                         <th>Rank</th>
-                        <td>{{$subcategory->rank}}</td>
+                        <td>{{$data->rank}}</td>
                     </tr>
                     <tr>
                         <th>Image</th>
-                        <td>{{$subcategory->image}}</td>
+                        <td>{{$data->image}}</td>
                     </tr>
                     <tr>
                         <th>Meta Title</th>
-                        <td>{{$subcategory->meta_title}}</td>
+                        <td>{{$data->meta_title}}</td>
                     </tr>
                     <tr>
                         <th>Meta Keyword</th>
-                        <td>{{$subcategory->meta_keyword}}</td>
+                        <td>{{$data->meta_keyword}}</td>
                     </tr>
                     <tr>
                         <th>Meta Description</th>
-                        <td>{{$subcategory->meta_description}}</td>
+                        <td>{{$data->meta_description}}</td>
                     </tr>
                     <tr>
                         <th>Status</th>
-                        <td>{{$product->status}}</td>
+                        <td>
+                            @include('backend.include.status',['status'=>$data->status])
+                        </td>
                     </tr>
                     <tr>
                         <th>Created By</th>
-                        <td>{{DB::table('users')->where('id', $product->created_by)->value('name')}}</td>
+                        <td>{{$data->createdBy->name}}</td>
                     </tr>
-
                     <tr>
                         <th>Updated By</th>
-                        <td>{{DB::table('users')->where('id', $product->updated_by)->value('name')}}</td>
+                        <td>
+                            @if(!empty($data->updated_by))
+                                {{$data->updatedBy->name}}
+                            @endif
+                        </td>
                     </tr>
-
-
-
                     <tr>
                         <th>Created At</th>
-                        <td>{{$subcategory->created_at}}</td>
-
-
-
-
+                        <td>{{$data->created_at}}</td>
 
                     </tr>
 

@@ -40,8 +40,10 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         try{
+            $request->request->add(['created_by'=>auth()->user()->id]);
             $brand=Brand::create($request->all());
             if($brand){
+
                 $request->session()->flash('success','Brand added successfuly');
             }else{
                 $request->session()->flash('error','Brand addition failed');
@@ -102,6 +104,7 @@ class BrandController extends Controller
         try
         {
             $brand = Brand::find($id);
+            request()->request->add(['updated_by'=>auth()->user()->id]);
             if(!$brand)
             {
                 request()->session()->flash('error','Error:Invalid Request');
