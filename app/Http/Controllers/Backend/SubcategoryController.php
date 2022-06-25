@@ -67,8 +67,7 @@ class SubcategoryController extends BackendBackendBaseController
         }
         return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
-
-
+    
     /**
      * Display the specified resource.
      *

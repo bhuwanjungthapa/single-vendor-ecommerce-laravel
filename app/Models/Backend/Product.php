@@ -12,8 +12,8 @@ class Product extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table='products';
-    protected $fillable = ['title','slug','status','specification','description','price','discount','stock','quantity','flash_key','hot_key','category_id','sub_category_id','meta_title','meta_keyword','meta_description','created_by','updated_by'];
-    protected $filltable=['title','slug','status','specification','description','price','discount','stock','quantity','flash_key','hot_key','category_id','sub_category_id','meta_title','meta_keyword','meta_description','created_by','updated_by'];
+    protected $fillable = ['title','slug','status','specification','description','price','discount','stock','quantity','flash_key','hot_key','category_id','subcategory_id','meta_title','meta_keyword','meta_description','created_by','updated_by'];
+    protected $filltable=['title','slug','status','specification','description','price','discount','stock','quantity','flash_key','hot_key','category_id','subcategory_id','meta_title','meta_keyword','meta_description','created_by','updated_by'];
 
     function createdBy()
     {
