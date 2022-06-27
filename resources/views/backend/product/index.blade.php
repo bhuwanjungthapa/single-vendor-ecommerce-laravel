@@ -86,10 +86,8 @@
                                 <input type="submit" class="btn btn-danger" value="Delete">
                             </form>
                         </th>
-
                     </tr>
                     @endforeach
-
                 </tbody>
             </table>
         </div>
