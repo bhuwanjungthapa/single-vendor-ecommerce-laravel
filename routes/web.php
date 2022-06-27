@@ -73,14 +73,18 @@ Route::prefix('backend/category/')->name('backend.category.')->group(function ()
 });
 
 //Products
-Route::get('product/create',[\App\Http\Controllers\Backend\ProductController::class,'create'])->name('product.create');
-Route::post('product/store',[\App\Http\Controllers\Backend\ProductController::class,'store'])->name('product.store');
-Route::get('product',[\App\Http\Controllers\Backend\ProductController::class,'index'])->name('product.index');
-Route::post('product/{id}/show',[\App\Http\Controllers\Backend\ProductController::class,'store'])->name('product.show');
-Route::get('product/{id}/edit',[\App\Http\Controllers\Backend\ProductController::class,'edit'])->name('product.edit');
-Route::put('product/{id}',[\App\Http\Controllers\Backend\ProductController::class,'update'])->name('product.update');
-Route::delete('product/{id}',[\App\Http\Controllers\Backend\ProductController::class,'destroy'])->name('product.destroy');
-
+Route::prefix('backend/product/')->name('backend.product.')->group(function (){
+    Route:: get('trash', [\App\Http\Controllers\Backend\ProductController::class, 'trash'])->name('trash');
+    Route:: post('restore/{id}', [\App\Http\Controllers\Backend\ProductController::class, 'restore'])->name('restore');
+    Route:: delete('force_delete/{id}', [\App\Http\Controllers\Backend\ProductController::class, 'permanentDelete'])->name('force_delete');
+    Route::get('create', [\App\Http\Controllers\Backend\ProductController::class, 'create'])->name('create');
+    Route::post('store', [\App\Http\Controllers\Backend\ProductController::class, 'store'])->name('store');
+    Route::get('', [\App\Http\Controllers\Backend\ProductController::class, 'index'])->name('index');
+    Route:: get('{id}',[\App\Http\Controllers\backend\ProductController::class,'show'])->name('show');
+    Route::get('{id}/edit', [\App\Http\Controllers\Backend\ProductController::class, 'edit'])->name('edit');
+    Route::put('{id}', [\App\Http\Controllers\Backend\ProductController::class, 'update'])->name('update');
+    Route::delete('{id}', [\App\Http\Controllers\Backend\ProductController::class, 'destroy'])->name('destroy');
+});
 //sub_category
 Route::prefix('backend/subcategories/')->name('backend.subcategories.')->group(function (){
     Route:: get('trash', [\App\Http\Controllers\Backend\SubcategoryController::class, 'trash'])->name('trash');

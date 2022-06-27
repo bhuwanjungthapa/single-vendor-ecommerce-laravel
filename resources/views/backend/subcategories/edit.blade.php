@@ -80,7 +80,6 @@
                 <div class="form-group">
                     {!!Form::label('meta_description','Meta Description')!!}
                     {!!Form::textarea('meta_description',null,['class'=> 'form-control','placeholder'=>'Meta Description'])!!}
-
                     <br>
                 </div>
                 <div class="form-group">
@@ -94,6 +93,7 @@
                 </div>
                 {{Form::close()}}
             </div>
+        </form>
 
         <!-- /.card-body -->
         <div class="card-footer">

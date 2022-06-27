@@ -1,15 +1,15 @@
-@extends('layouts.backend') @section('title','Product') @section('content')
+@extends('layouts.backend') @section('title',$module) @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Product Management</h1>
+                <h1>{{$module}} Management</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Product</li>
+                    <li class="breadcrumb-item active">{{$module}}</li>
                 </ol>
             </div>
         </div>
@@ -23,7 +23,7 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Product Details</h3>
+            <h3 class="card-title">{{$module}} Details</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -41,72 +41,71 @@
 
                     <tr>
                         <th>Title</th>
-                        <td>{{$product->title}}</td>
+                        <td>{{$data->title}}</td>
                     </tr>
 
                     <tr>
                         <th>Slug</th>
-                        <td>{{$product->slug}}</td>
+                        <td>{{$data->slug}}</td>
                     </tr>
                     <tr>
                         <th>Status</th>
-                        <td>{{$product->status}}</td>
+                        <td>
+                            @include('backend.include.status',['status'=>$data->status])
+                        </td>
                     </tr>
                     <tr>
-                        <th>Status</th>
-                        <td>{{$product->status}}</td>
-                    </tr>
-                    {{-- <tr>
                         <th>Specification</th>
-                        <td>{{$product->specification}}</td>
-                    </tr> --}}
+                        <td>{{$data->specification}}</td>
+                    </tr>
                     <tr>
                         <th>Description</th>
-                        <td>{{$product->description}}</td>
+                        <td>{{$data->description}}</td>
                     </tr>
                     <tr>
                         <th>Price</th>
-                        <td>{{$product->price}}</td>
+                        <td>{{$data->price}}</td>
                     </tr>
                     <tr>
                         <th>Discount</th>
-                        <td>{{$product->discount}}</td>
+                        <td>{{$data->discount}}</td>
                     </tr>
                     <tr>
                         <th>Stock</th>
-                        <td>{{$product->stock}}</td>
+                        <td>{{$data->stock}}</td>
                     </tr>
                     <tr>
                         <th>Quantity</th>
-                        <td>{{$product->quantity}}</td>
+                        <td>{{$data->quantity}}</td>
                     </tr>
                     <tr>
                         <th>Meta Tile</th>
-                        <td>{{$product->meta_title}}</td>
+                        <td>{{$data->meta_title}}</td>
                     </tr>
                     <tr>
                         <th>Meta Keyword</th>
-                        <td>{{$product->meta_keyword}}</td>
+                        <td>{{$data->meta_keyword}}</td>
                     </tr>
                     <tr>
                         <th>Meta Description</th>
-                        <td>{{$product->meta_description}}</td>
+                        <td>{{$data->meta_description}}</td>
                     </tr>
                     <tr>
                         <th>Created By</th>
-                        <td>{{DB::table('users')->where('id', $product->created_by)->value('name')}}</td>
+                        <td>{{$data->createdBy->name}}</td>
                     </tr>
-
                     <tr>
                         <th>Updated By</th>
-                        <td>{{DB::table('users')->where('id', $product->updated_by)->value('name')}}</td>
+                        <td>
+                            @if(!empty($data->updated_by))
+                                {{$data->updatedBy->name}}
+                            @endif
+                        </td>
                     </tr>
-
-
 
                     <tr>
                         <th>Created At</th>
-                        <td>{{$product->created_at}}</td>
+                        <td>{{$data->created_at}}</td>
 
                     </tr>
 

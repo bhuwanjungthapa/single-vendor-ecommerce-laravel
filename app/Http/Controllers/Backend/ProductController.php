@@ -8,11 +8,11 @@ use App\Models\Backend\Product;
 use App\Models\Backend\Category;
 use App\Models\Backend\Subcategory;
 
-class ProductController extends Controller
+class ProductController extends BackendBackendBaseController
 {
     protected $base_route = 'backend.product.';
     protected $base_view = 'backend.product.';
-    protected $module = 'product';
+    protected $module = 'Product';
 
     public function __construct()
     {
@@ -25,10 +25,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-
-        $data = Product::all();
-        return view('backend.product.index', compact('data'));
-
+        $data['records'] = $this->model->all();
+        return view($this->__loadDataToView($this->base_view.'index'), compact('data'));
 
     }
 
@@ -39,9 +37,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $data1['categories'] = Category::all();
-        $data2['subcategories'] = Subcategory::all();
-        return view('backend.product.create',compact('data1','data2'));
+        $data['categories']= Category::pluck('title','id');
+        $data['subcategories']= Subcategory::pluck('title','id');
+        return view($this->__loadDataToView($this->base_view .'create') ,compact('data'));
     }
 
     /**
@@ -52,21 +50,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->request->add(['created_by'=>auth()->user()->id]);
+        $request->validate([
+            'title'=>'required'
+        ]);
         try{
-            $product=Product::create($request->all());
-            if($product){
-                $request->session()->flash('success','product added successfuly');
+            $request->request->add(['created_by'=>auth()->user()->id]);
+            $attribute=$this->model->create($request->all());
+            if($attribute){
+                $request->session()->flash('success','Subcategories added successfuly');
             }else{
-                $request->session()->flash('error','product addition failed');
+                $request->session()->flash('error','Subcategories addition failed');
             }
         }
         catch (\Exception $exception){
             $request->session()->flash('error','Error'.$exception->getMessage());
         }
-        return redirect()->route('product.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
-
 
     /**
      * Display the specified resource.
@@ -76,8 +76,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
-        return view('backend.product.show',compact('product'));
+        $data = $this->model->find($id);
+        return view($this->__loadDataToView($this->base_view.'show'),compact('data'));
     }
 
     /**
@@ -90,18 +90,18 @@ class ProductController extends Controller
     {
         try
         {
-            $product = Product::find($id);
-            if(!$product)
+            $data['records'] = $this->model->find($id);
+            if(!$data['records'])
             {
                 request()->session()->flash('error','Error:Invalid Request');
-                return redirect()->route('product.index');
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
         }
         catch(Exception $exception)
         {
             request()->session()->flash('error','Error:'.$exception->getMessage());
         }
-        return view('backend.product.edit',compact('product'));
+        return view($this->__loadDataToView($this->base_view.'edit'),compact('data'));
     }
 
     /**
@@ -113,29 +113,23 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try
-        {
-            $product = Product::find($id);
-            if(!$product)
+        try{
+            $data = $this->model->find($id);
+            request()->request->add(['updated_by'=>auth()->user()->id]);
+            if(!$data)
             {
-                request()->session()->flash('error','Error:Invalid Request');
-                return redirect()->route('product.index');
+                request()->session()->flash('error','Error: Invalid Request');
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
-            if($product->update($request->all()))
-            {
-                request()->session()->flash('success','Updated');
-
-            }else
-            {
-                request()->session()->flash('error','Updated failed');
+            if ($data->update($request->all())){
+                $request->session()->flash('success',' Subcategory Updated Successfully!!');
+            }else{
+                $request->session()->flash('error','Subcategory Update Failed!!');
             }
-
+        }catch(\Exception $exception){
+            $request->session()->flash('error','Error: ' . $exception->getMessage());
         }
-        catch(Exception $exception)
-        {
-            request()->session()->flash('error','Error:'.$exception->getMessage());
-        }
-        return redirect()->route('product.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
 
 
@@ -147,23 +141,70 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        try
-        {
-            $product = Product::find($id);
-            if($product->delete())
-            {
-                request()->session()->flash('success','product Deleted Successfully!!');
-            }
-            else
-            {
-                request()->session()->flash('error','product Deleted Failed');
-            }
+        $data['record']=$this->model->find($id);
+        if(!$data['record' ]){
+            request()->session()->flash('error',"Error:Invalid Request");
+            return redirect()->route($this->__loadDataToView($this->base_route.'index'));
 
         }
-        catch(Exception $exception)
+        if($data["record"]->delete())
         {
-            request()->session()->flash('error','Error:'.$exception->getMessage());
+            request()->session()->flash('success',"Successfully Deleted");
+
+        }else{
+            request()->session()->flash('error',"Error:Delete Failed ");
+
         }
-        return redirect()->route('product.index');
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+    }
+    public function trash()
+    {
+        $data['records'] = $this->model->onlyTrashed()->get();
+        return view($this->__loadDataToView($this->base_view.'trash'), compact('data'));
+
+
+    }
+    public function restore(Request $request, $id)
+    {
+        try {
+            $data['record'] = $this->model->onlyTrashed()->where('id', $id)->first();
+            if (!$data['record']) {
+                $data['record']->restore();
+                request()->session()->flash('error', "Error:Invalid Request");
+                return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+            }
+            /*$request->request->add(['updated_by'=>auth()->user()->id]);
+            $record=$data['record']->update($request->all());*/
+            if ($data['record']){
+                $data['record']->restore();
+                request()->session()->flash('success', "Subcategory Restored");
+            }else{
+                request()->session()->flash('error',"Subcategory Restore  Failed ");
+            }
+        }
+        catch(\Exception $exception){
+            request()->session()->flash('error',"Error:".$exception->getMessage());
+
+        }
+
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+    }
+    public function permanentDelete($id)
+    {
+        $data['record']=$this->model->onlyTrashed()->where('id',$id)->first();
+        if(!$data['record' ]){
+            request()->session()->flash('error',"Error:Invalid Request");
+            return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+
+        }
+        if($data["record"]->forceDelete())
+        {
+            request()->session()->flash('success',"Successfully Deleted");
+
+        }else{
+            request()->session()->flash('error',"Error:Delete Failed ");
+
+        }
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
 }

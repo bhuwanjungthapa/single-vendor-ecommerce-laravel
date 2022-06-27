@@ -1,16 +1,16 @@
 @extends('layouts.backend')
-@section('title','Product') @section('content')
+@section('title',$module) @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Product Management</h1>
+                    <h1>{{$module}} Management</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Product</li>
+                        <li class="breadcrumb-item active">{{$module}}</li>
                     </ol>
                 </div>
             </div>
@@ -24,7 +24,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"> Product</h3>
+                <h3 class="card-title">{{$module}}</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -35,29 +35,37 @@
                     </button>
                 </div>
             </div>
-            <form action="{{route('product.store')}}" method="post">
+            <form action="{{route($base_route.'store')}}" method="post">
                 @csrf
                 <div class="card-body">
 
 
-                    <div class="form-group">
+                    {{--<div class="form-group">
                         <label for="title">Category</label>
                         <select class="form-control" id="category_id" name="category_id" >
-                            @foreach($data1['categories'] as $record)
+                            @foreach($data['categories'] as $record)
                                 <option value="{{$record->id}}">{{$record->title}}</option>
                             @endforeach
-
                         </select>
+                    </div>--}}
+                    <div class="form-group">
+                        {!!Form::label('category_id','Category')!!}
+                        {!!Form::select ('category_id',$data['categories'],null,['class'=> 'form-control'])!!}
                     </div>
                     <div class="form-group">
+                        {!!Form::label('subcategory_id','subcategory')!!}
+                        {!!Form::select ('subcategory_id',$data['subcategories'],null,['class'=> 'form-control'])!!}
+                    </div>
+
+                    {{--<div class="form-group">
                         <label for="title">Sub Category</label>
                         <select class="form-control" id="subcategory_id " name="subcategory_id" >
-                            @foreach($data2['subcategories'] as $record)
+                            @foreach($data['subcategories'] as $record)
                                 <option value="{{$record->id}}">{{$record->title}}</option>
                             @endforeach
 
                         </select>
-                    </div>
+                    </div>--}}
 
                     <div class="form-group">
                         <label for="title">Title</label>
@@ -72,10 +80,10 @@
                         <input type="radio" name="status" value="1" checked> Enable<br>
                         <input type="radio" name="status" value="2"> Disable<br>
                     </div>
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label for="specification">Specification</label>
                         <input type="text" name="specification" class="form-control" id="specification" placeholder="Enter specification">
-                    </div> --}}
+                    </div>
                     <div class="form-group">
                         <label for="description">Description</label>
                         <input type="text" name="description" class="form-control" id="description" placeholder="Enter description">
