@@ -102,11 +102,8 @@ Route::prefix('backend/subcategories/')->name('backend.subcategories.')->group(f
 
 //Settings
 Route::prefix('backend/setting/')->name('backend.setting.')->group(function (){
-    Route::get('create', [\App\Http\Controllers\Backend\SettingController::class, 'create'])->name('create');
-    Route::post('store', [\App\Http\Controllers\Backend\SettingController::class, 'store'])->name('store');
-    Route::get('', [\App\Http\Controllers\Backend\SettingController::class, 'index'])->name('index');
-    Route::get('{id}/edit', [\App\Http\Controllers\Backend\SettingController::class, 'edit'])->name('edit');
-    Route::put('{id}', [\App\Http\Controllers\Backend\SettingController::class, 'update'])->name('update');
+    Route::get('', [\App\Http\Controllers\Backend\SettingController::class,'index'])->name('index');
+    Route::put('{id}', [\App\Http\Controllers\Backend\SettingController::class,'update'])->name('update');
 });
 
 //Slider

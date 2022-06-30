@@ -116,9 +116,6 @@
                     {!!Form::textarea('meta_description',null,['class'=> 'form-control','placeholder'=>'Meta Description'])!!}
                     <br>
                 </div>
-
-
-
                 <div>
                     {!!Form::submit('Save' .''.$module,['class'=>'btn btn-success'])!!}
                     {!!Form::reset('Clear'.''.$module,['class'=>'btn btn-danger'])!!}
