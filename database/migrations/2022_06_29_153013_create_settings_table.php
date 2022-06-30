@@ -22,10 +22,15 @@ return new class extends Migration
             $table->string('address');
             $table->string('email');
             $table->string('phone');
-            $table->string('google_map_link');
-            $table->string('facebook_link');
-            $table->string('twitter_link');
-            $table->string('instagram_link');
+            $table->string('google_map_link')->nullable();
+            $table->string('facebook_link')->nullable();
+            $table->string('twitter_link')->nullable();
+            $table->string('instagram_link')->nullable();
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

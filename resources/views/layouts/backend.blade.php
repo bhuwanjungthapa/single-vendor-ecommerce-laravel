@@ -229,6 +229,23 @@
                         </ul>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('backend.setting.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Settings
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('backend.slider.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Sliders
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>

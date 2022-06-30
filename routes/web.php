@@ -72,6 +72,7 @@ Route::prefix('backend/category/')->name('backend.category.')->group(function ()
     Route::delete('{id}', [\App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('destroy');
 });
 
+
 //Products
 Route::prefix('backend/product/')->name('backend.product.')->group(function (){
     Route:: get('trash', [\App\Http\Controllers\Backend\ProductController::class, 'trash'])->name('trash');
@@ -97,4 +98,22 @@ Route::prefix('backend/subcategories/')->name('backend.subcategories.')->group(f
     Route::get('{id}/edit', [\App\Http\Controllers\Backend\SubcategoryController::class, 'edit'])->name('edit');
     Route::put('{id}', [\App\Http\Controllers\Backend\SubcategoryController::class, 'update'])->name('update');
     Route::delete('{id}', [\App\Http\Controllers\Backend\SubcategoryController::class, 'destroy'])->name('destroy');
+});
+
+//Settings
+Route::prefix('backend/setting/')->name('backend.setting.')->group(function (){
+    Route::get('create', [\App\Http\Controllers\Backend\SettingController::class, 'create'])->name('create');
+    Route::post('store', [\App\Http\Controllers\Backend\SettingController::class, 'store'])->name('store');
+    Route::get('', [\App\Http\Controllers\Backend\SettingController::class, 'index'])->name('index');
+    Route::get('{id}/edit', [\App\Http\Controllers\Backend\SettingController::class, 'edit'])->name('edit');
+    Route::put('{id}', [\App\Http\Controllers\Backend\SettingController::class, 'update'])->name('update');
+});
+
+//Slider
+Route::prefix('backend/slider/')->name('backend.slider.')->group(function (){
+    Route::get('create', [\App\Http\Controllers\Backend\SliderController::class, 'create'])->name('create');
+    Route::post('store', [\App\Http\Controllers\Backend\SliderController::class, 'store'])->name('store');
+    Route::get('', [\App\Http\Controllers\Backend\SliderController::class, 'index'])->name('index');
+    Route::get('{id}/edit', [\App\Http\Controllers\Backend\SliderController::class, 'edit'])->name('edit');
+    Route::put('{id}', [\App\Http\Controllers\Backend\SliderController::class, 'update'])->name('update');
 });
