@@ -67,7 +67,7 @@ class SubcategoryController extends BackendBackendBaseController
         }
         return redirect()->route($this->__loadDataToView($this->base_route.'index'));
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -91,6 +91,7 @@ class SubcategoryController extends BackendBackendBaseController
         try
         {
             $data['records'] = $this->model->find($id);
+            $data['categories']= Category::pluck('title','id');
             if(!$data['records'])
             {
                 request()->session()->flash('error','Error:Invalid Request');

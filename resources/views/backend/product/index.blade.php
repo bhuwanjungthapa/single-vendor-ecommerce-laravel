@@ -49,11 +49,14 @@
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Slug</th>
+                        {{--<th>Slug</th>--}}
                         <th>Status</th>
+                        <th>Category</th>
+                        <th>Sub Category</th>
+                        <th>Stock</th>
                         <th>Created By</th>
-                        <th>Updated By</th>
-                        <th>Created At</th>
+                       {{-- <th>Updated By</th>
+                        <th>Created At</th>--}}
                         <th>Action</th>
                     </tr>
 
@@ -65,19 +68,21 @@
                     <tr>
                         <td>{{$n++}}</td>
                         <td>{{$record->title}}</td>
-                        <td>{{$record->slug}}</td>
+                        {{--<td>{{$record->slug}}</td>--}}
                         <td>
                             @include('backend.include.status',['status'=>$record->status])
                         </td>
-
+                        <td>{{$record->category->title}}</td>
+                        <td>{{$record->subcategory->title}}</td>
+                        <td>{{$record->stock}}</td>
                         <td>{{$record->createdBy->name}}</td>
 
-                        <td>
+                        {{--<td>
                             @if(!empty($record->updated_by))
                                 {{$record->updatedBy->name}}
                             @endif
                         </td>
-                        <td>{{$record->created_at}}</td>
+                        <td>{{$record->created_at}}</td>--}}
                         <th><a href="{{route($base_route.'show',$record->id)}}" class="btn btn-primary">ViewDetails</a>
                             <a href="{{route($base_route.'edit',$record->id)}}" class="btn btn-warning" style="display:inline-block">Edit</a>
                             <form action="{{route($base_route.'destroy',$record->id)}}" method="post" style="display:inline-block">

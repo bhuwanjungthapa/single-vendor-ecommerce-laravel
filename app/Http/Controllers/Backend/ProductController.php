@@ -57,9 +57,9 @@ class ProductController extends BackendBackendBaseController
             $request->request->add(['created_by'=>auth()->user()->id]);
             $attribute=$this->model->create($request->all());
             if($attribute){
-                $request->session()->flash('success','Subcategories added successfuly');
+                $request->session()->flash('success','Product added successfuly');
             }else{
-                $request->session()->flash('error','Subcategories addition failed');
+                $request->session()->flash('error','Product addition failed');
             }
         }
         catch (\Exception $exception){
@@ -91,6 +91,8 @@ class ProductController extends BackendBackendBaseController
         try
         {
             $data['records'] = $this->model->find($id);
+            $data['categories']= Category::pluck('title','id');
+            $data['subcategories']= Subcategory::pluck('title','id');
             if(!$data['records'])
             {
                 request()->session()->flash('error','Error:Invalid Request');
@@ -122,9 +124,9 @@ class ProductController extends BackendBackendBaseController
                 return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
             if ($data->update($request->all())){
-                $request->session()->flash('success',' Subcategory Updated Successfully!!');
+                $request->session()->flash('success',' Product Updated Successfully!!');
             }else{
-                $request->session()->flash('error','Subcategory Update Failed!!');
+                $request->session()->flash('error','Product Update Failed!!');
             }
         }catch(\Exception $exception){
             $request->session()->flash('error','Error: ' . $exception->getMessage());
@@ -177,9 +179,9 @@ class ProductController extends BackendBackendBaseController
             $record=$data['record']->update($request->all());*/
             if ($data['record']){
                 $data['record']->restore();
-                request()->session()->flash('success', "Subcategory Restored");
+                request()->session()->flash('success', "Product Restored");
             }else{
-                request()->session()->flash('error',"Subcategory Restore  Failed ");
+                request()->session()->flash('error',"Product Restore  Failed ");
             }
         }
         catch(\Exception $exception){

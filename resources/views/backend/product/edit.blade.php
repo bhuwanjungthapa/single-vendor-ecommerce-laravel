@@ -42,11 +42,11 @@
 
                 <div class="form-group">
                     {!!Form::label('category_id','Category')!!}
-                    {!!Form::select ('category_id',$data['records'],null,['class'=> 'form-control'])!!}
+                    {!!Form::select ('category_id',$data['categories'],null,['class'=> 'form-control'])!!}
                 </div>
                 <div class="form-group">
                     {!!Form::label('subcategory_id','Subcategory')!!}
-                    {!!Form::select ('subcategory_id',$data['records'],null,['class'=> 'form-control'])!!}
+                    {!!Form::select ('subcategory_id',$data['subcategories'],null,['class'=> 'form-control'])!!}
                 </div>
                 <div class="form-group">
                     {!!Form::label('title','Title')!!}
@@ -88,7 +88,6 @@
                     @error('discount')
                     <span class="text-danger">{{$message}}</span> @enderror
                 </div>
-
 
                 <div class="form-group">
                     {!!Form::label('stock','Stock')!!}

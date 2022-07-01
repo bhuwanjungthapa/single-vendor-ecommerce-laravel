@@ -79,6 +79,10 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>Category</th>
+                        <td>{{$data->category->title}}</td>
+                    </tr>
+                    <tr>
                         <th>Created By</th>
                         <td>{{$data->createdBy->name}}</td>
                     </tr>

@@ -54,6 +54,16 @@
                             @include('backend.include.status',['status'=>$data->status])
                         </td>
                     </tr>
+
+                    <tr>
+                        <th>Category</th>
+                        <td>{{$data->category->title}}</td>
+                    </tr>
+                    <tr>
+                        <th>Sub Category</th>
+                        <td>{{$data->subcategory->title}}</td>
+                    </tr>
+
                     <tr>
                         <th>Specification</th>
                         <td>{{$data->specification}}</td>
