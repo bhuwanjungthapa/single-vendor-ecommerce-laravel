@@ -70,64 +70,66 @@
                     </div>--}}
 
                     <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" name="title" class="form-control" id="title" placeholder="Enter Title">
+                        {!!Form::label('title','Title')!!}
+                        {!!Form::text ('title',null,['class'=> 'form-control','placeholder'=>'Title'])!!}
+                        @error('title')
+                        <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label for="slug">Slug</label>
-                        <input type="text" name="slug" class="form-control" id="slug" placeholder="Slug">
+                        {!!Form::label('slug','Slug')!!}
+                        {!!Form::text ('slug',null,['class'=> 'form-control','placeholder'=>'Slug'])!!}
+                        @error('slug')
+                        <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label for="status">Status</label><br>
-                        <input type="radio" name="status" value="1" checked> Enable<br>
-                        <input type="radio" name="status" value="2"> Disable<br>
+                        {!!Form::label('status','Status')!!} <br>
+                        <input type="radio" name="status" value="1"> Enable<br>
+                        <input type="radio" name="status" value="2" checked> Disable<br>
                     </div>
                     <div class="form-group">
-                        <label for="specification">Specification</label>
-                        <input type="text" name="specification" class="form-control" id="specification" placeholder="Enter specification">
+                        {!!Form::label('specification','Specification')!!}
+                        {!!Form::text('specification',null,['class'=> 'form-control','placeholder'=>'Specification'])!!}
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" name="description" class="form-control" id="description" placeholder="Enter description">
+                        {!!Form::label('description','Description')!!}
+                        {!!Form::text('description',null,['class'=> 'form-control','placeholder'=>'Description'])!!}
                     </div>
                     <div class="form-group">
-                        <label for="price">Price</label>
-                        <input type="number" name="price" class="form-control" id="price" placeholder="Enter price">
+                        {!!Form::label('price','Price')!!}
+                        {!!Form::number('price',null,['class'=> 'form-control','placeholder'=>'Price'])!!}
                     </div>
                     <div class="form-group">
-                        <label for="discount">Discount</label>
-                        <input type="number" name="discount" class="form-control" id="discount" placeholder="Enter discount">
+                        {!!Form::label('discount','Discount')!!}
+                        {!!Form::number('discount',null,['class'=> 'form-control','placeholder'=>'Discount'])!!}
                     </div>
                     <div class="form-group">
-                        <label for="stock">Stock</label>
-                        <input type="number" name="stock" class="form-control" id="stock" placeholder="Enter stock amount">
+                        {!!Form::label('stock','Stock')!!}
+                        {!!Form::number('stock',null,['class'=> 'form-control','placeholder'=>'Stock'])!!}
                     </div>
                     <div class="form-group">
-                        <label for="quantity">Quantity</label>
-                        <input type="number" name="quantity" class="form-control" id="quantity" placeholder="Enter quantity amount">
+                        {!!Form::label('quantity','Quantity')!!}
+                        {!!Form::text('quantity',null,['class'=> 'form-control','placeholder'=>'Quantity'])!!}
                     </div>
                     <div class="form-group">
-                        <label for="meta_description">Flash Key</label>
-                        <input type="number" name="flash_key" class="form-control" id="flash_key" placeholder="Enter flash_key">
+                        {!!Form::label('flash_key','Flash Key')!!}
+                        {!!Form::text('flash_key',null,['class'=> 'form-control','placeholder'=>'Flash Key'])!!}
                     </div>
                     <div class="form-group">
-                        <label for="meta_description">Hot Key</label>
-                        <input type="text" name="hot_key" class="form-control" id="hot_key" placeholder="Enter hot_key">
+                        {!!Form::label('hot_key','Hot Key')!!}
+                        {!!Form::text('hot_key',null,['class'=> 'form-control','placeholder'=>'Hot Key'])!!}
                     </div>
                     <div class="form-group">
-                        <label for="meta_title">Meta Title</label>
-                        <input type="text" name="meta_title" class="form-control" id="meta_title" placeholder="Enter meta_title">
+                        {!!Form::label('meta_title','Meta Title')!!}
+                        {!!Form::text('meta_title',null,['class'=> 'form-control','placeholder'=>'Meta Title'])!!}
                     </div>
                     <div class="form-group">
-                        <label for="meta_keyword">Meta Keyword</label>
-                        <input type="text" name="meta_keyword" class="form-control" id="meta_keyword" placeholder="Enter meta_keyword">
+                        {!!Form::label('meta_keyword','Meta Keyword')!!}
+                        {!!Form::text('meta_keyword',null,['class'=> 'form-control','placeholder'=>'Meta Keyword'])!!}
                     </div>
                     <div class="form-group">
-                        <label for="meta_description">Meta Description</label>
-                        <input type="text" name="meta_description" class="form-control" id="meta_description" placeholder="Enter meta_description">
+                        {!!Form::label('meta_description','Meta Description')!!}
+                        {!!Form::textarea('meta_description',null,['class'=> 'form-control','placeholder'=>'Meta Description'])!!}
                     </div>
-
-
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>

@@ -38,7 +38,25 @@ class SettingController extends BackendBackendBaseController
         }
         return view($this->__loadDataToView($this->base_view.'index'),compact('data'));
     }
-
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title'=>'required'
+        ]);
+        try{
+            $request->request->add(['created_by'=>auth()->user()->id]);
+            $attribute=$this->model->create($request->all());
+            if($attribute){
+                $request->session()->flash('success','Product added successfuly');
+            }else{
+                $request->session()->flash('error','Product addition failed');
+            }
+        }
+        catch (\Exception $exception){
+            $request->session()->flash('error','Error'.$exception->getMessage());
+        }
+        return redirect()->route($this->__loadDataToView($this->base_route.'index'));
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -46,7 +64,7 @@ class SettingController extends BackendBackendBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try{
             $data = $this->model->find($id);
@@ -57,9 +75,9 @@ class SettingController extends BackendBackendBaseController
                 return redirect()->route($this->__loadDataToView($this->base_route.'index'));
             }
             if ($data->update($request->all())){
-                $request->session()->flash('success','Setting Updated Successfully!!');
+                $request->session()->flash('success',' Product Updated Successfully!!');
             }else{
-                $request->session()->flash('error','Setting Update Failed!!');
+                $request->session()->flash('error','Product Update Failed!!');
             }
         }catch(\Exception $exception){
             $request->session()->flash('error','Error: ' . $exception->getMessage());

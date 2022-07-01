@@ -39,7 +39,7 @@
                 <input type="hidden" name="_method" value="PUT">
                 @csrf
                 <div class="card-body">
-                    {!!Form::model($data['records'],['route' => [$base_route.'update',$data['records']->id],'method'=>'post'])!!}
+                    {!!Form::model($data['records'],['route' => [$base_route.'store'],'method'=>'post'])!!}
                     <div class="form-group">
                         {!!Form::label('site_name','Site Name')!!}
                         {!!Form::text ('site_name',null,['class'=> 'form-control','placeholder'=>'Site Name'])!!}
@@ -52,7 +52,6 @@
                         @error('site_slogan')
                         <span class="text-danger">{{$message}}</span> @enderror
                     </div>
-
                     <div class="form-group">
                         {!!Form::label('site_logo','Site Logo')!!}
                         {!!Form::text ('site_logo',null,['class'=> 'form-control','placeholder'=>'Site Log'])!!}

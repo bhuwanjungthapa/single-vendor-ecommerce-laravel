@@ -103,6 +103,7 @@ Route::prefix('backend/subcategories/')->name('backend.subcategories.')->group(f
 //Settings
 Route::prefix('backend/setting/')->name('backend.setting.')->group(function (){
     Route::get('', [\App\Http\Controllers\Backend\SettingController::class,'index'])->name('index');
+    Route::post('store', [\App\Http\Controllers\Backend\SubcategoryController::class, 'store'])->name('store');
     Route::put('{id}', [\App\Http\Controllers\Backend\SettingController::class,'update'])->name('update');
 });
 
