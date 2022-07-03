@@ -29,9 +29,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">List {{$module}}
-                    <a href="{{route($base_route.'trash')}}" class="btn btn-info">Trash</a>
-                </h3>
+                <h3 class="card-title">List {{$module}}</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -52,7 +50,7 @@
                         <th>Status</th>
                         <th>Email</th>
                         <th>Password</th>
-                        <th>Created AT</th>
+                        <th>Created At</th>
                         {{-- <th>Updated By</th>
                          <th>Created At</th>--}}
                         <th>Action</th>
@@ -71,7 +69,7 @@
                                 @include('backend.include.status',['status'=>$record->status])
                             </td>
                             <td>{{$record->email}}</td>
-                            <td>{{$record->passowrd}}</td>
+                            <td>{{$record->password}}</td>
                             <td>{{$record->created_at}}</td>
 
                             {{--<td>
@@ -82,11 +80,6 @@
                             <td>{{$record->created_at}}</td>--}}
                             <th><a href="{{route($base_route.'show',$record->id)}}" class="btn btn-primary">ViewDetails</a>
                                 <a href="{{route($base_route.'edit',$record->id)}}" class="btn btn-warning" style="display:inline-block">Edit</a>
-                                <form action="{{route($base_route.'destroy',$record->id)}}" method="post" style="display:inline-block">
-                                    @method("delete")
-                                    @csrf
-                                    <input type="submit" class="btn btn-danger" value="Delete">
-                                </form>
                             </th>
                         </tr>
                     @endforeach

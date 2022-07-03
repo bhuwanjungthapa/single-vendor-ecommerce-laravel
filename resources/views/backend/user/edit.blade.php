@@ -23,7 +23,9 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{$module}}</h3>
+                <h3 class="card-title">{{$module}}
+                    <a href="{{route($base_route.'index')}}" class="btn btn-info">List</a>
+                </h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -34,53 +36,63 @@
                     </button>
                 </div>
             </div>
-            <form action="{{route($base_route.'update',$data['records']->id)}}" method="post">
-                <input type="hidden" name="_method" value="PUT">
+
+            <div class="card-body">
+                {!!Form::model($data['records'],['route' => [$base_route.'update',$data['records']->id],'method'=>'post'])!!}
+                {!!Form::hidden('_method','PUT')!!}
                 @csrf
-                <div class="card-body">
-                    {!!Form::model($data['records'],['route' => [$base_route.'store'],'method'=>'post'])!!}
-
-
-                    <div class="form-group">
-                        {!!Form::label('name','Name')!!}
-                        {!!Form::text ('name',null,['class'=> 'form-control'])!!}
-                        @error('name')
-                        <span class="text-danger">{{$message}}</span> @enderror
-                    </div>
-                    <div class="form-group">
-                        {!!Form::label('email','Email')!!}
-                        {!!Form::text ('email',null,['class'=> 'form-control'])!!}
-                        @error('email')
-                        <span class="text-danger">{{$message}}</span> @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="active">Status</label><br>
-                        @if($data['records']->status==1)
-                            {!!Form::label('status','Status')!!} <br>
-                            <input type="radio" name="status" value="1" checked> Enable<br>
-                            <input type="radio" name="status" value="2"> Disable<br>
-                        @else
-                            {!!Form::label('status','Status')!!} <br>
-                            <input type="radio" name="status" value="1"> Enable<br>
-                            <input type="radio" name="status" value="2" checked> Disable<br>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        {!!Form::label('password','Password')!!}
-                        {!!Form::password('password',null,['class'=> 'form-control'])!!}
-                        <br>
-                    </div>
-
-                    <div>
-                        {!!Form::submit('Save' .''.$module,['class'=>'btn btn-success'])!!}
-                        {!!Form::reset('Clear'.''.$module,['class'=>'btn btn-danger'])!!}
-                    </div>
-                    {{Form::close()}}
-
+                <div class="form-group">
+                    {!!Form::label('name','Name')!!}
+                    {!!Form::text ('name',null,['class'=> 'form-control'])!!}
+                    @error('name')
+                    <span class="text-danger">{{$message}}</span> @enderror
                 </div>
-            </form>
+                <div class="form-group">
+                    {!!Form::label('email','Email')!!}
+                    {!!Form::email ('email',null,['class'=> 'form-control'])!!}
+                    @error('email')
+                    <span class="text-danger">{{$message}}</span> @enderror
+                </div>
+
+                {{--                    <div class="form-group">--}}
+                {{--                        @if($data['records']->status==1)--}}
+                {{--                            {!!Form::label('status','Status')!!} <br>--}}
+                {{--                            <input type="radio" name="status" value="1" checked> Enable<br>--}}
+                {{--                            <input type="radio" name="status" value="2"> Disable<br>--}}
+                {{--                        @else--}}
+                {{--                            {!!Form::label('status','Status')!!} <br>--}}
+                {{--                            <input type="radio" name="status" value="1"> Enable<br>--}}
+                {{--                            <input type="radio" name="status" value="2" checked> Disable<br>--}}
+                {{--                        @endif--}}
+                {{--                    </div>--}}
+
+                <div class="form-group">
+                    {!!Form::label('status','Status')!!}<br>
+                    @if($data['records']->status==1)
+                        {{Form::radio('status',1,true,['class'=>'field'])}}Enable<br>
+                        {{Form::radio('status',0,false,['class'=>'field'])}}Disable<br>
+                    @else
+                        {{Form::radio('status',1,true,['class'=>'field'])}}Enable<br>
+                        {{Form::radio('status',0,false,['class'=>'field'])}}Disable<br>
+                    @endif
+                </div>
+
+
+                <div class="form-group">
+                    {!!Form::label('password','Password')!!}
+                    {!!Form::password('password',null,['class'=>'form-control'])!!}
+                    @error('password')
+                    <span class="text-danger">{{$message}}</span> @enderror
+                </div>
+
+
+                <div>
+                    {!!Form::submit('Save' .''.$module,['class'=>'btn btn-success'])!!}
+                    {!!Form::reset('Clear'.''.$module,['class'=>'btn btn-danger'])!!}
+                </div>
+                {{Form::close()}}
+            </div>
+
             <!-- /.card-body -->
             <div class="card-footer">
                 Footer

@@ -23,7 +23,9 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{$module}} Details</h3>
+                <h3 class="card-title">{{$module}}Details
+                    <a href="{{route($base_route.'index')}}" class="btn btn-info">List</a>
+                </h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -38,7 +40,6 @@
                 <table class="table table-bordered">
                     <thead>
 
-
                     <tr>
                         <th>Id</th>
                         <td>{{$data->id}}</td>
@@ -48,6 +49,7 @@
                         <th>Name</th>
                         <td>{{$data->name}}</td>
                     </tr>
+
                     <tr>
                         <th>Status</th>
                         <td>
@@ -63,9 +65,7 @@
                     <tr>
                         <th>Created At</th>
                         <td>{{$data->created_at}}</td>
-
                     </tr>
-
                     </thead>
 
                 </table>

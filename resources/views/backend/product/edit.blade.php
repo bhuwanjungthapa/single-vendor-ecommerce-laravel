@@ -34,13 +34,11 @@
                     </button>
             </div>
         </div>
-        <form action="{{route($base_route.'update',$data['records']->id)}}" method="post">
-        <input type="hidden" name="_method" value="PUT">
+        <div class="card-body">
+            {!!Form::model($data['records'],['route' => [$base_route.'update',$data['records']->id],'method'=>'post'])!!}
+            {!!Form::hidden('_method','PUT')!!}
             @csrf
-            <div class="card-body">
-                {!!Form::model($data['records'],['route' => [$base_route.'store'],'method'=>'post'])!!}
-
-                <div class="form-group">
+            <div class="form-group">
                     {!!Form::label('category_id','Category')!!}
                     {!!Form::select ('category_id',$data['categories'],null,['class'=> 'form-control'])!!}
                 </div>
@@ -60,11 +58,16 @@
                     @error('slug')
                     <span class="text-danger">{{$message}}</span> @enderror
                 </div>
-                <div class="form-group">
-                    {!!Form::label('status','Status')!!} <br>
-                    <input type="radio" name="status" value="1"> Enable<br>
-                    <input type="radio" name="status" value="2" checked> Disable<br>
-                </div>
+            <div class="form-group">
+                {!!Form::label('status','Status')!!}<br>
+                @if($data['records']->status==1)
+                    {{Form::radio('status',1,true,['class'=>'field'])}}Enable<br>
+                    {{Form::radio('status',0,false,['class'=>'field'])}}Disable<br>
+                @else
+                    {{Form::radio('status',1,true,['class'=>'field'])}}Enable<br>
+                    {{Form::radio('status',0,false,['class'=>'field'])}}Disable<br>
+                @endif
+            </div>
                 <div class="form-group">
                     {!!Form::label('specification','Specification')!!}
                     {!!Form::textarea('specification',null,['class'=> 'form-control','placeholder'=>'Specification'])!!}
@@ -122,7 +125,7 @@
                 {{Form::close()}}
 
             </div>
-        </form>
+
         <!-- /.card-body -->
         <div class="card-footer">
             Footer

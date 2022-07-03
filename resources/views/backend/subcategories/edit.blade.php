@@ -36,11 +36,15 @@
                     </button>
             </div>
         </div>
-        <form action="{{route($base_route.'update',$data['records']->id)}}" method="post">
-        <input type="hidden" name="_method" value="PUT">
+{{--        <form action="{{route($base_route.'update',$data['records']->id)}}" method="post">--}}
+{{--        <input type="hidden" name="_method" value="PUT">--}}
+{{--            @csrf--}}
+{{--            <div class="card-body">--}}
+{{--                {!!Form::model($data['records'],['route' => [$base_route.'store'],'method'=>'post'])!!}--}}
+        <div class="card-body">
+            {!!Form::model($data['records'],['route' => [$base_route.'update',$data['records']->id],'method'=>'post'])!!}
+            {!!Form::hidden('_method','PUT')!!}
             @csrf
-            <div class="card-body">
-                {!!Form::model($data['records'],['route' => [$base_route.'store'],'method'=>'post'])!!}
                 <div class="form-group">
                     {!!Form::label('category_id','Category')!!}
                     {!!Form::select ('category_id',$data['categories'],null,['class'=> 'form-control'])!!}
@@ -82,18 +86,23 @@
                     {!!Form::textarea('meta_description',null,['class'=> 'form-control','placeholder'=>'Meta Description'])!!}
                     <br>
                 </div>
-                <div class="form-group">
-                    {!!Form::label('status','Status')!!} <br>
-                    <input type="radio" name="status" value="1"> Enable<br>
-                    <input type="radio" name="status" value="2" checked> Disable<br>
-                </div>
+            <div class="form-group">
+                {!!Form::label('status','Status')!!}<br>
+                @if($data['records']->status==1)
+                    {{Form::radio('status',1,true,['class'=>'field'])}}Enable<br>
+                    {{Form::radio('status',0,false,['class'=>'field'])}}Disable<br>
+                @else
+                    {{Form::radio('status',1,true,['class'=>'field'])}}Enable<br>
+                    {{Form::radio('status',0,false,['class'=>'field'])}}Disable<br>
+                @endif
+            </div>
                 <div>
                     {!!Form::submit('Save' .''.$module,['class'=>'btn btn-success'])!!}
                     {!!Form::reset('Clear'.''.$module,['class'=>'btn btn-danger'])!!}
                 </div>
                 {{Form::close()}}
             </div>
-        </form>
+{{--        </form>--}}
 
         <!-- /.card-body -->
         <div class="card-footer">
