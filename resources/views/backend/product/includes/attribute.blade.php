@@ -6,7 +6,7 @@
     </tr>
     <tr>
         <td>
-            {!! Form::select('attribute_id[]',$data['attributes'],null,['class' => 'form-control','placeholder' => "Select Attribute"]) !!}
+{{--            {!! Form::select('attribute_id[]',$data['attributes'],null,['class' => 'form-control','placeholder' => "Select Attribute"]) !!}--}}
         </td>
         <td><input type="text" name="attribute_value[]" class="form-control" placeholder="Enter Attribute Value"/></td>
         <td>

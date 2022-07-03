@@ -36,9 +36,9 @@
                     </button>
             </div>
         </div>
-        <form action="{{route($base_route.'store')}}" method="post">
-            @csrf
             <div class="card-body">
+                {!! Form::open(['route' => $base_route.'store','method' => 'post']) !!}
+                @csrf
                {{-- <div class="form-group">
                     <label for="title">Category</label>
                     <select class="form-control" id="category_id" name="category_id" >
@@ -99,6 +99,7 @@
                     {!!Form::submit('Save' .''.$module,['class'=>'btn btn-success'])!!}
                     {!!Form::reset('Clear'.''.$module,['class'=>'btn btn-danger'])!!}
                 </div>
+                {{Form::close()}}
                 </div>
 
 

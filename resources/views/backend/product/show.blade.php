@@ -23,7 +23,10 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{$module}} Details</h3>
+            <h3 class="card-title">{{$module}} Details
+                <a href="{{route($base_route.'index')}}" class="btn btn-info">Goto List</a>
+                <a href="{{route($base_route.'edit',$data->id)}}" class="btn btn-warning" style="display:inline-block">Edit</a>
+            </h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -88,6 +91,29 @@
                         <th>Quantity</th>
                         <td>{{$data->quantity}}</td>
                     </tr>
+
+                    <tr>
+                        <th>Flash Key</th>
+                        <td>
+                            @if($data->flash_key==1)
+                                <span class="text-success">Active</span>
+                            @else
+                                <span class="text-danger">De-active</span>
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Hot Key</th>
+                        <td>
+                            @if($data->hot_key==1)
+                                <span class="text-success">Active</span>
+                            @else
+                                <span class="text-danger">De-active</span>
+                            @endif
+                        </td>
+                    </tr>
+
                     <tr>
                         <th>Meta Tile</th>
                         <td>{{$data->meta_title}}</td>

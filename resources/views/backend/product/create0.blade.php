@@ -21,43 +21,43 @@
     <!-- Main content -->
     <section class="content">
 
-                <div class="card">
-                    <div class="card-header d-flex p-0">
-                        <h3 class="card-title p-3">Add new {{$module}}</h3>
-                        <ul class="nav nav-pills ml-auto p-2">
-                            <li class="nav-item"><a class="nav-link active" href="#basic" data-toggle="tab">Basic Info</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#meta" data-toggle="tab">Meta Data</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#image" data-toggle="tab">Image</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#attribute" data-toggle="tab">Attribute</a></li>
-                        </ul>
-                    </div><!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="basic">
-                                @include('backend.product.includes.basic')
-                            </div>
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="meta">
-                                @include('backend.product.includes.meta')
-                            </div>
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="image">
-                                @include('backend.product.includes.image')
-                            </div>
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="attribute">
-                                4
-                            </div>
-                        </div>
-                        <!-- /.tab-content -->
-                    </div><!-- /.card-body -->
-                    <div class="card-footer">
-                        <div class="form-group">
-                            {!! Form::submit('Save ' . $module, ['class' => 'btn btn-info']); !!}
-                            {!! Form::reset('Clear', ['class' => 'btn btn-danger']); !!}
-                        </div>
-                    </div><!-- /.card-footer -->
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{$module}}
+                    <a href="{{route($base_route.'index')}}" class="btn btn-info">List</a>
+                </h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
+            </div>
+            <div class="card-body">
+                {!! Form::open(['route' => $base_route.'store','method' => 'post']) !!}
+                @csrf
+
+
+            </div>
+            <div class="card-footer">
+                {!!Form::submit('Submit',['class'=>'btn btn-success'])!!}
+                {!!Form::reset('Clear',['class'=>'btn btn-danger'])!!}
+            </div>
+            {{Form::close()}}
+        </div>
+
+        <!-- /.card-body -->
+        <div class="card-footer">
+            Footer
+        </div>
+        <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+
     </section>
     <!-- /.content -->
 @endsection

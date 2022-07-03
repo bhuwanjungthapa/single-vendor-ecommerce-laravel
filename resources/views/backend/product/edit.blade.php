@@ -104,7 +104,26 @@
                     @error('quantity')
                     <span class="text-danger">{{$message}}</span> @enderror
                 </div>
-
+                <div class="form-group">
+                    {!!Form::label('flash_key','Flash Key')!!}<br>
+                    @if($data['records']->status==1)
+                        {{Form::radio('flash_key',1,true,['class'=>'field'])}}Enable<br>
+                        {{Form::radio('flash_key',0,false,['class'=>'field'])}}Disable<br>
+                    @else
+                        {{Form::radio('flash_key',1,true,['class'=>'field'])}}Enable<br>
+                        {{Form::radio('flash_key',0,false,['class'=>'field'])}}Disable<br>
+                    @endif
+                </div>
+            <div class="form-group">
+                {!!Form::label('hot_key','Hot Key')!!}<br>
+                @if($data['records']->status==1)
+                    {{Form::radio('hot_key',1,true,['class'=>'field'])}}Enable<br>
+                    {{Form::radio('hot_key',0,false,['class'=>'field'])}}Disable<br>
+                @else
+                    {{Form::radio('hot_key',1,true,['class'=>'field'])}}Enable<br>
+                    {{Form::radio('hot_key',0,false,['class'=>'field'])}}Disable<br>
+                @endif
+            </div>
                 <div class="form-group">
                     {!!Form::label('meta_title','Meta Title')!!}
                     {!!Form::text('meta_title',null,['class'=> 'form-control','placeholder'=>'Meta Title'])!!}
