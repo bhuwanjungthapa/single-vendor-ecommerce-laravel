@@ -115,3 +115,16 @@ Route::prefix('backend/slider/')->name('backend.slider.')->group(function (){
     Route::get('{id}/edit', [\App\Http\Controllers\Backend\SliderController::class, 'edit'])->name('edit');
     Route::put('{id}', [\App\Http\Controllers\Backend\SliderController::class, 'update'])->name('update');
 });
+
+//User
+Route::prefix('backend/user/')->name('backend.user.')->group(function (){
+    Route:: get('trash', [\App\Http\Controllers\Backend\UserController::class, 'trash'])->name('trash');
+    Route:: post('restore/{id}', [\App\Http\Controllers\Backend\UserController::class, 'restore'])->name('restore');
+    Route:: delete('force_delete/{id}', [\App\Http\Controllers\Backend\UserController::class, 'permanentDelete'])->name('force_delete');
+    Route::get('', [\App\Http\Controllers\Backend\UserController::class, 'index'])->name('index');
+    Route::post('store', [\App\Http\Controllers\Backend\SubcategoryController::class, 'store'])->name('store');
+    Route:: get('{id}',[\App\Http\Controllers\backend\UserController::class,'show'])->name('show');
+    Route::get('{id}/edit', [\App\Http\Controllers\Backend\UserController::class, 'edit'])->name('edit');
+    Route::put('{id}', [\App\Http\Controllers\Backend\UserController::class, 'update'])->name('update');
+    Route::delete('{id}', [\App\Http\Controllers\Backend\UserController::class, 'destroy'])->name('destroy');
+});

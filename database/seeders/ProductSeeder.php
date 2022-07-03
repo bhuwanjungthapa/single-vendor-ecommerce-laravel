@@ -21,6 +21,7 @@ class ProductSeeder extends Seeder
                 'created_by' =>1,
                 'category_id' =>1,
                 'subcategory_id' =>1,
+
                 'title' => $product[$i],
                 'slug' => strtolower($product[$i]),
                 'discount' =>0,

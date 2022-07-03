@@ -46,7 +46,7 @@
                             </div>
                             <!-- /.tab-pane -->
                             <div class="tab-pane" id="attribute">
-                                @include('backend.product.includes.attribute')
+                                4
                             </div>
                         </div>
                         <!-- /.tab-content -->

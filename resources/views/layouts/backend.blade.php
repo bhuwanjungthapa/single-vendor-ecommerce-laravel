@@ -253,6 +253,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('backend.user.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                User
+                            </p>
+                        </a>
+                    </li>
 
 
                 </ul>
